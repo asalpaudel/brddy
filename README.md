@@ -18,3 +18,4 @@ If you are developing a production application, we recommend using TypeScript wi
 
  npx json-server db.json --port=4000
  
+#### npm install react-leaflet leaflet

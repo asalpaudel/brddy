@@ -6,7 +6,8 @@ const AdminSidebar = ({ isOpen, toggleSidebar }) => {
     const sidebarLinks = [
         { to: '/admin/dashboard', label: 'Dashboard', icon: HiOutlineViewGrid },
         { to: '/admin/products', label: 'Products', icon: HiOutlineCube },
-        { to: '/admin/categories', label: 'Categories', icon: HiOutlineTag }, // New Link
+        { to: '/admin/categories', label: 'Categories', icon: HiOutlineTag },
+        { to: '/admin/orders', label: 'Orders', icon: HiOutlineShoppingCart },
         { to: '/admin/users', label: 'Users', icon: HiOutlineUsers },
         { to: '/admin/settings', label: 'Settings', icon: HiOutlineCog },
     ];

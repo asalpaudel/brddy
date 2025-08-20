@@ -29,7 +29,11 @@ const Cart = () => {
                 {cartItems.map(item => (
                     <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b pb-4">
                         <div className="flex items-center gap-4">
-                            <img src={item.images[0]} alt={item.name} className="w-24 h-24 object-cover rounded-md" />
+                        <img 
+                            src={(item.images && item.images.length > 0) ? item.images[0] : 'https://placehold.co/100x100?text=No+Image'} 
+                            alt={item.name} 
+                            className="w-24 h-24 object-cover rounded-md" 
+                        />
                             <div>
                                 <h3 className="font-semibold text-stone-700">{item.name}</h3>
                                 <p className="text-sm text-stone-500">${parseFloat(item.price).toFixed(2)}</p>
@@ -65,9 +69,11 @@ const Cart = () => {
                         <span>Total</span>
                         <span>${total.toFixed(2)}</span>
                     </div>
-                    <button className="w-full mt-4 bg-amber-500 text-white py-3 rounded-md hover:bg-amber-600 transition-colors">
+                    <Link to="/checkout"
+                        className="w-full block text-center mt-4 bg-amber-500 text-white py-3 rounded-md hover:bg-amber-600 transition-colors"
+                    >
                         Proceed to Checkout
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>
