@@ -1,7 +1,5 @@
-// src/page/user/Products.jsx
 
 import React from 'react';
-// FIX: Changed path from ../ to ../../
 import ProductList from '../../component/user/ProductList';
 
 const Products = () => {

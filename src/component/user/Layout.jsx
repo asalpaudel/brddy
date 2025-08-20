@@ -1,7 +1,4 @@
-// src/component/user/Layout.jsx
-
 import { Outlet } from "react-router";
-// Updated import paths
 import Header from "./Header";
 import Footer from "./Footer";
 

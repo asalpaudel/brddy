@@ -1,8 +1,6 @@
-// src/component/user/ProductList.jsx
-
 import React, { useState, useEffect } from 'react';
-import { getAllProducts } from '../../services/product'; // Correct path to service
-import ProductCard from './ProductCard'; // Correct path to component
+import { getAllProducts } from '../../services/product'; 
+import ProductCard from './ProductCard'; 
 import { toast } from 'react-toastify';
 
 const ProductList = () => {

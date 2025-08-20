@@ -1,14 +1,10 @@
-// src/page/user/ProductDetail.jsx
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// FIX: Changed paths from ../ to ../../
 import { getProductById } from '../../services/product';
 import { getAllCategories } from '../../services/category';
 import { Carousel } from 'antd';
 import { toast } from 'react-toastify';
 
-// ... rest of the file remains the same
 const ProductDetail = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);

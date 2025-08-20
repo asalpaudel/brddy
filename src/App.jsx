@@ -3,7 +3,6 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// Updated import path for Layout
 import Layout from './component/user/Layout';
 import Login from './page/Login';
 import Register from './page/Register';
