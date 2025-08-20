@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useCart } from '../../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -29,7 +29,8 @@ const MapEvents = ({ setPosition }) => {
 };
 
 const Checkout = () => {
-  const { cartItems } = useCart();
+  // --- UPDATED: Destructure clearCart from the hook ---
+  const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
   
   // State for form inputs
@@ -133,7 +134,10 @@ const Checkout = () => {
     try {
       await placeOrder(orderData);
       toast.success('Your order has been placed successfully!');
-      // NOTE: Here you would typically clear the cart. We'll add this later.
+      
+      // --- UPDATED: Call clearCart() on success ---
+      clearCart();
+      
       navigate('/my-orders');
     } catch (error) {
       toast.error('There was an error placing your order. Please try again.');

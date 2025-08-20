@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { HiOutlineViewGrid, HiOutlineCube, HiOutlineTag, HiOutlineUsers, HiOutlineCog, HiOutlineChevronLeft } from 'react-icons/hi';
+import { HiOutlineViewGrid, HiOutlineCube, HiOutlineTag, HiOutlineUsers, HiOutlineCog, HiOutlineChevronLeft,  HiOutlineShoppingCart } from 'react-icons/hi';
 
 const AdminSidebar = ({ isOpen, toggleSidebar }) => {
     const sidebarLinks = [

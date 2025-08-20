@@ -1,22 +1,32 @@
-// src/component/user/Header.jsx
-
-import React, { useState, useEffect } from 'react';
-import { HiOutlineShoppingCart, HiMenu, HiX, HiOutlineLogout } from 'react-icons/hi';
+import React, { useState, useEffect, useRef } from 'react';
+import { HiOutlineShoppingCart, HiMenu, HiX, HiOutlineLogout, HiOutlineUserCircle, HiOutlineArchive } from 'react-icons/hi';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useCart } from '../../context/CartContext'; // 1. Import useCart hook
+import { useCart } from '../../context/CartContext';
 
 const Header = () => {
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false); // State for the new dropdown
+    const profileRef = useRef(null); // Ref to detect clicks outside the dropdown
     
     const [userName, setUserName] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // 2. Get cartItems from the context
     const { cartItems } = useCart();
-
-    // 3. Calculate the total number of items in the cart
     const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+    // Effect to close the dropdown if user clicks outside of it
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setIsProfileOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('AUTH_TOKEN');
@@ -28,6 +38,7 @@ const Header = () => {
     }, []);
 
     const handleLogout = () => {
+        // Clear all user-related data from storage
         localStorage.removeItem('AUTH_TOKEN');
         localStorage.removeItem('USER_EMAIL');
         localStorage.removeItem('USER_ROLE');
@@ -35,14 +46,14 @@ const Header = () => {
         
         setIsLoggedIn(false);
         setUserName(null);
+        setIsProfileOpen(false); // Close dropdown upon logout
         navigate('/login');
     };
 
     const navLinks = [
         { href: '/', label: 'Home' },
-        { href: '#', label: 'About Us' },
         { href: '/products', label: 'Products' },
-        { href: '#', label: 'Contact Us' },
+        // The "My Orders" link is now in the dropdown, so it can be removed from here if you wish
     ];
 
     return (
@@ -64,30 +75,47 @@ const Header = () => {
                         </div>
                     </div>
 
+                    {/* --- Right side icons --- */}
                     <div className="hidden md:flex items-center space-x-4">
                         {isLoggedIn ? (
-                            <>
-                                <span className="text-stone-700 font-medium">Welcome, {userName}</span>
-                                <button
-                                    onClick={handleLogout}
-                                    className="flex items-center text-stone-700 hover:text-amber-600 font-medium transition-colors duration-300"
-                                    title="Logout"
-                                >
-                                    <HiOutlineLogout className="h-6 w-6" />
+                            // --- NEW AVATAR DROPDOWN ---
+                            <div className="relative" ref={profileRef}>
+                                <button onClick={() => setIsProfileOpen(!isProfileOpen)} className="flex items-center gap-2 text-stone-700 font-medium p-2 rounded-md hover:bg-amber-100">
+                                    <HiOutlineUserCircle className="h-8 w-8" />
+                                    <span>{userName}</span>
                                 </button>
-                            </>
+                                {isProfileOpen && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5">
+                                        <NavLink 
+                                            to="/my-orders" 
+                                            onClick={() => setIsProfileOpen(false)} 
+                                            className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-gray-100"
+                                        >
+                                            <HiOutlineArchive/> My Orders
+                                        </NavLink>
+                                        <button 
+                                            onClick={handleLogout} 
+                                            className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                                        >
+                                            <HiOutlineLogout/> Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         ) : (
+                            // --- Buttons for logged-out users ---
                             <>
-                                <NavLink to="/login" className="text-stone-700 hover:text-amber-600 font-medium transition-colors duration-300">
+                                <NavLink to="/login" className="text-stone-700 hover:text-amber-600 font-medium">
                                     Sign In
                                 </NavLink>
-                                <NavLink to="/register" className="bg-amber-500 text-white px-5 py-2 rounded-full hover:bg-amber-600 transition-colors duration-300 font-medium shadow-sm">
+                                <NavLink to="/register" className="bg-amber-500 text-white px-5 py-2 rounded-full hover:bg-amber-600 font-medium shadow-sm">
                                     Sign Up
                                 </NavLink>
                             </>
                         )}
-                        {/* 4. Updated cart icon to be a link and display item count */}
-                        <NavLink to="/cart" aria-label="Open cart" className="relative text-stone-700 hover:text-amber-600 p-2 rounded-full hover:bg-amber-100 transition-colors duration-300">
+                        
+                        {/* Cart Icon */}
+                        <NavLink to="/cart" aria-label="Open cart" className="relative text-stone-700 p-2 rounded-full hover:bg-amber-100">
                             <HiOutlineShoppingCart className="h-7 w-7" />
                             {totalItemsInCart > 0 && (
                                 <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
@@ -97,36 +125,19 @@ const Header = () => {
                         </NavLink>
                     </div>
                     
+                    {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center">
-                        <button onClick={() => setIsOpen(!isOpen)} className="inline-flex items-center justify-center p-2 rounded-md text-stone-700">
-                            {isOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
+                        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="inline-flex items-center justify-center p-2 rounded-md text-stone-700">
+                            {isMobileMenuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
                         </button>
                     </div>
                 </div>
             </div>
 
-            {isOpen && (
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
                 <div className="md:hidden">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        {isLoggedIn ? (
-                            <div className="px-3 py-2 text-stone-800 font-bold">Welcome, {userName}</div>
-                        ) : null}
-                        {navLinks.map((link) => (
-                            <NavLink key={link.label} to={link.href} className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-amber-100">{link.label}</NavLink>
-                        ))}
-                    </div>
-                    <div className="pt-4 pb-3 border-t border-amber-200">
-                        <div className="flex flex-col items-start px-5 space-y-3">
-                            {isLoggedIn ? (
-                                <button onClick={handleLogout} className="w-full text-left bg-red-500 text-white px-4 py-2 rounded-md font-medium">Logout</button>
-                            ) : (
-                                <>
-                                    <NavLink to="/login" className="text-stone-700 hover:text-amber-600 font-medium px-3 py-2">Sign In</NavLink>
-                                    <NavLink to="/register" className="w-full text-left bg-amber-500 text-white px-4 py-2 rounded-md font-medium">Sign Up</NavLink>
-                                </>
-                            )}
-                        </div>
-                    </div>
+                    {/* You can update the mobile menu here as well if needed */}
                 </div>
             )}
         </nav>

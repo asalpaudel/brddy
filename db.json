@@ -65,5 +65,85 @@
       "role": "user",
       "createdAt": "2025-08-20T14:59:33.876Z"
     }
+  ],
+  "orders": [
+    {
+      "id": "a36a",
+      "customerInfo": {
+        "name": "Asal Paudel",
+        "phone": "9842822885",
+        "email": "paudel.asal00@gmail.com"
+      },
+      "shippingDetails": {
+        "address": "Imadol",
+        "mapLocation": {
+          "lat": 27.65603209671474,
+          "lng": 85.33920668468858
+        }
+      },
+      "items": [
+        {
+          "id": "7af8",
+          "name": "Vegan Birthday Cake",
+          "description": "Vegan Birthday Cake",
+          "price": 20,
+          "categoryIds": [
+            "1",
+            "3b51",
+            "1f46"
+          ],
+          "images": [
+            "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
+          ],
+          "updatedAt": "2025-08-20T14:12:42.750Z",
+          "createdAt": "2025-08-20T14:11:49.926Z",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 20,
+      "remarks": "",
+      "status": "Cancelled",
+      "orderDate": "2025-08-20T19:57:27.802Z",
+      "lastUpdated": "2025-08-20T20:06:02.581Z"
+    },
+    {
+      "id": "a0f0",
+      "customerInfo": {
+        "name": "Asal Paudel",
+        "phone": "9842822885",
+        "email": "paudel.asal00@gmail.com"
+      },
+      "shippingDetails": {
+        "address": "Imadol, Sheetal Tole",
+        "mapLocation": {
+          "lat": 27.65606572456882,
+          "lng": 85.33923150436087
+        }
+      },
+      "items": [
+        {
+          "id": "5f43",
+          "name": "Vegan Gluten Chocolate Donuts",
+          "description": "Vegan Gluten Chocolate Donuts",
+          "price": 2,
+          "categoryIds": [
+            "1",
+            "746e"
+          ],
+          "images": [
+            "http://localhost:4001/images/1755698847768-vegan-gluten-free-chocolate-donuts.jpg",
+            "http://localhost:4001/images/1755698847769-Chocolate-Doughnuts.png"
+          ],
+          "updatedAt": "2025-08-20T14:07:27.773Z",
+          "createdAt": "2025-08-20T14:07:27.773Z",
+          "quantity": 9
+        }
+      ],
+      "totalAmount": 18,
+      "remarks": "",
+      "status": "Cancelled",
+      "orderDate": "2025-08-20T20:05:20.477Z",
+      "lastUpdated": "2025-08-20T20:06:14.960Z"
+    }
   ]
 }

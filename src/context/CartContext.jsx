@@ -30,6 +30,10 @@ const cartReducer = (state, action) => {
                 item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
             );
         }
+        // --- NEW ACTION ---
+        case 'CLEAR_CART': {
+            return []; // Reset state to an empty array
+        }
         case 'LOAD_CART': {
             return action.payload;
         }
@@ -71,8 +75,14 @@ export const CartProvider = ({ children }) => {
         dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } });
     };
 
+    // --- NEW FUNCTION ---
+    const clearCart = () => {
+        dispatch({ type: 'CLEAR_CART' });
+    };
+
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity }}>
+        // --- ADD clearCart TO THE CONTEXT VALUE ---
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart }}>
             {children}
         </CartContext.Provider>
     );
