@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { HiX } from 'react-icons/hi';
 import { Carousel } from 'antd';
 
-const ViewProduct = ({ product, onViewClose }) => {
+const ViewProduct = ({ product, onViewClose, categories = [] }) => { // Added categories prop with default value
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedImage, setSelectedImage] = useState('');
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -15,6 +15,19 @@ const ViewProduct = ({ product, onViewClose }) => {
             carouselRef.current.goTo(0, true);
         }
     }, [product]);
+    
+    // Helper function to get category names from their IDs
+    const getCategoryNames = () => {
+        if (!product.categoryIds || !categories || categories.length === 0) return 'N/A';
+        
+        return product.categoryIds
+            .map(id => {
+                const category = categories.find(cat => cat.id === id);
+                return category ? category.name : null;
+            })
+            .filter(Boolean) // Remove any nulls if a category was not found
+            .join(', ');
+    };
 
     if (!product) return null;
 
@@ -29,8 +42,10 @@ const ViewProduct = ({ product, onViewClose }) => {
     };
 
     const handleThumbnailClick = (index) => {
-        setCurrentSlide(index);
-        carouselRef.current.goTo(index);
+        if (carouselRef.current) {
+            setCurrentSlide(index);
+            carouselRef.current.goTo(index);
+        }
     };
 
     return (
@@ -49,15 +64,15 @@ const ViewProduct = ({ product, onViewClose }) => {
                     {/* Image Gallery Section */}
                     <div>
                         {/* Main Carousel */}
-                        {product.images.length > 0 ? (
+                        {product.images && product.images.length > 0 ? (
                             <Carousel 
                                 ref={carouselRef}
                                 afterChange={(current) => setCurrentSlide(current)}
-                                dots={false} // We are using custom thumbnails as dots
+                                dots={false}
                             >
                                 {product.images.map((img, index) => (
                                     <div key={index}>
-                                        <div className="flex items-center justify-center bg-gray-100 rounded-lg">
+                                        <div className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden">
                                             <img
                                                 src={img}
                                                 alt={`${product.name} image ${index + 1}`}
@@ -75,19 +90,21 @@ const ViewProduct = ({ product, onViewClose }) => {
                         )}
 
                         {/* Thumbnail Navigation */}
-                        <div className="flex space-x-2 mt-4 overflow-x-auto p-2">
-                            {product.images.map((img, index) => (
-                                <img
-                                    key={`thumb-${index}`}
-                                    src={img}
-                                    alt={`Thumbnail ${index + 1}`}
-                                    className={`w-16 h-16 object-cover rounded-md cursor-pointer border-2 transition-all duration-200 ${
-                                        currentSlide === index ? 'border-amber-500 scale-110' : 'border-transparent hover:border-gray-300'
-                                    }`}
-                                    onClick={() => handleThumbnailClick(index)}
-                                />
-                            ))}
-                        </div>
+                        {product.images && product.images.length > 1 && (
+                            <div className="flex space-x-2 mt-4 overflow-x-auto p-2">
+                                {product.images.map((img, index) => (
+                                    <img
+                                        key={`thumb-${index}`}
+                                        src={img}
+                                        alt={`Thumbnail ${index + 1}`}
+                                        className={`w-16 h-16 object-cover rounded-md cursor-pointer border-2 transition-all duration-200 ${
+                                            currentSlide === index ? 'border-amber-500 scale-110' : 'border-transparent hover:border-gray-300'
+                                        }`}
+                                        onClick={() => handleThumbnailClick(index)}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     {/* Product Details */}
@@ -99,10 +116,10 @@ const ViewProduct = ({ product, onViewClose }) => {
                         <div className="border-t border-gray-200 pt-4">
                             <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
                                 <dt className="text-sm font-medium text-stone-500">Price</dt>
-                                <dd className="text-sm text-stone-900 font-semibold">${product.price}</dd>
+                                <dd className="text-sm text-stone-900 font-semibold">${parseFloat(product.price).toFixed(2)}</dd>
 
-                                <dt className="text-sm font-medium text-stone-500">Category</dt>
-                                <dd className="text-sm text-stone-900">{product.category}</dd>
+                                <dt className="text-sm font-medium text-stone-500">Categories</dt>
+                                <dd className="text-sm text-stone-900">{getCategoryNames()}</dd>
 
                                 <dt className="text-sm font-medium text-stone-500">Created At</dt>
                                 <dd className="text-sm text-stone-900">{new Date(product.createdAt).toLocaleString()}</dd>
@@ -127,7 +144,7 @@ const ViewProduct = ({ product, onViewClose }) => {
 
             {/* Image Viewer Modal (Lightbox) */}
             {isModalVisible && (
-                <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" onClick={closeImageModal}>
+                <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4" onClick={closeImageModal}>
                     <button onClick={closeImageModal} className="absolute top-4 right-4 text-white text-4xl z-50">
                         <HiX />
                     </button>
@@ -135,6 +152,7 @@ const ViewProduct = ({ product, onViewClose }) => {
                         src={selectedImage}
                         alt="Enlarged product view"
                         className="max-w-[90vw] max-h-[90vh] object-contain"
+                        onClick={(e) => e.stopPropagation()} // Prevents modal from closing when clicking on the image
                     />
                 </div>
             )}

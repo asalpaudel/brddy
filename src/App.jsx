@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
 import { ToastContainer } from 'react-toastify';
@@ -10,6 +10,7 @@ import Login from './page/Login';
 import AdminLayout from './component/admin/AdminLayout';
 import Dashboard from './page/admin/Dashboard';
 import Product from './page/admin/Product';
+import Category from './page/admin/Category'; // Import the Category component
 
 
 function App() {
@@ -31,16 +32,17 @@ function App() {
 
 
           <Route path="/admin" element={<AdminLayout />}>
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/admin/products" element={<Product />} />
-           {/*  <Route path="/admin/student" element={<Student />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="products" element={<Product />} />
+            <Route path="categories" element={<Category />} /> {/* Added category route */}
+            {/* <Route path="/admin/student" element={<Student />} />
             <Route path="/admin/add-blog" element={<AddBlog />} />
             <Route path="/admin/view-blog" element={<ViewBlog />} />
             <Route path="/admin/edit-blog/:id" element={<AddBlog />} />
             <Route path="/admin/user" element={<User />} />
             <Route path="/admin/add-user" element={<AddUser />} />
             <Route path="/admin/edit-user/:id" element={<AddUser />} />
-            <Route path="/admin/view-user/:id" element={<ViewUser />} /> */}
+            <Route path="/admin/view-user/:id"={<ViewUser />} /> */}
           </Route>
         </Routes>
 

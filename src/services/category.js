@@ -7,7 +7,8 @@ export const getAllCategories = async () => {
     const response = await axios.get(API_URL);
     return response.data;
   } catch (error) {
-    console.error("Error fetching categories:", error);
+    // Enhanced error logging
+    console.error("Error fetching categories:", error.response ? error.response.data : error.message);
     return [];
   }
 };
@@ -17,7 +18,9 @@ export const createCategory = async (categoryData) => {
     const response = await axios.post(API_URL, categoryData);
     return response.data;
   } catch (error) {
-    console.error("Error creating category:", error);
+    // Enhanced error logging
+    console.error("Error creating category:", error.response ? error.response.data : error.message);
+    // Re-throw the error so the component can catch it
     throw error;
   }
 };
@@ -27,7 +30,8 @@ export const updateCategory = async (id, categoryData) => {
     const response = await axios.put(`${API_URL}/${id}`, categoryData);
     return response.data;
   } catch (error) {
-    console.error("Error updating category:", error);
+    // Enhanced error logging
+    console.error("Error updating category:", error.response ? error.response.data : error.message);
     throw error;
   }
 };
@@ -37,7 +41,8 @@ export const deleteCategory = async (id) => {
     await axios.delete(`${API_URL}/${id}`);
     return true;
   } catch (error) {
-    console.error("Error deleting category:", error);
+    // Enhanced error logging
+    console.error("Error deleting category:", error.response ? error.response.data : error.message);
     throw error;
   }
 };

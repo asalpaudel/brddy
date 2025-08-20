@@ -1,20 +1,31 @@
 import React from 'react';
 import { HiPencil, HiTrash, HiEye } from 'react-icons/hi';
 
-const ProductRow = ({ productData, handleEdit, handleDelete, handleView }) => {
+const ProductRow = ({ productData, categories, handleEdit, handleDelete, handleView }) => {
+    
+    // Helper function to get category names from their IDs
+    const getCategoryNames = (categoryIds) => {
+        if (!categoryIds || !categories || !categories.length) return 'N/A';
+        return categoryIds
+            .map(id => categories.find(cat => cat.id === id)?.name)
+            .filter(Boolean) // Remove any undefined if a category was deleted
+            .join(', ');
+    };
+
     return (
         <>
             {productData && productData.map((item) => (
                 <tr key={item.id} className="border-b border-gray-200 hover:bg-amber-50">
                     <td className="py-3 px-4">
                         <img 
-                            src={item.images[0] || 'https://placehold.co/100x100/D2B48C/000?text=No+Image'} 
+                            // **FIX:** Safely check if images exist and have content before accessing the first element.
+                            src={(item.images && item.images.length > 0) ? item.images[0] : 'https://placehold.co/100x100?text=No+Image'} 
                             alt={item.name} 
                             className="h-16 w-16 object-cover rounded-md"
                         />
                     </td>
                     <td className="py-3 px-4 font-medium text-stone-800">{item.name}</td>
-                    <td className="py-3 px-4">{item.category}</td>
+                    <td className="py-3 px-4">{getCategoryNames(item.categoryIds)}</td>
                     <td className="py-3 px-4">${item.price}</td>
                     <td className="py-3 px-4">{new Date(item.updatedAt).toLocaleDateString()}</td>
                     <td className="py-3 px-4">

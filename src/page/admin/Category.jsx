@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { getAllCategories, deleteCategory } from '../../services/category';
+// Corrected the import from 'AddComponent' to 'AddCategory'
 import AddCategory from '../../component/admin/AddCategory';
 import CategoryRow from '../../component/admin/CategoryRow';
 
@@ -10,7 +11,9 @@ const Category = () => {
     const [categoryToEdit, setCategoryToEdit] = useState(null);
 
     const fetchCategories = () => {
-        getAllCategories().then(setCategories);
+        getAllCategories()
+            .then(setCategories)
+            .catch(() => toast.error("Failed to fetch categories."));
     };
 
     useEffect(() => {
@@ -28,7 +31,7 @@ const Category = () => {
     };
 
     const handleDelete = (id) => {
-        if (window.confirm('Are you sure you want to delete this category?')) {
+        if (window.confirm('Are you sure you want to delete this category? This might affect products associated with it.')) {
             deleteCategory(id)
                 .then(() => {
                     toast.success('Category deleted successfully.');
@@ -45,6 +48,8 @@ const Category = () => {
     };
 
     if (showForm) {
+        // I am assuming AddComponent.jsx is supposed to be AddCategory.jsx
+        // If the component file is named AddComponent, change the import above.
         return <AddCategory categoryToEdit={categoryToEdit} onFormClose={handleFormClose} />;
     }
 
@@ -52,7 +57,7 @@ const Category = () => {
         <div className="bg-white p-6 rounded-lg shadow-lg">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold text-stone-700">Product Categories</h2>
-                <button onClick={handleAdd} className="bg-amber-500 text-white px-5 py-2 rounded-md hover:bg-amber-600">
+                <button onClick={handleAdd} className="bg-amber-500 text-white px-5 py-2 rounded-md hover:bg-amber-600 transition-colors">
                     + Add Category
                 </button>
             </div>
@@ -60,13 +65,19 @@ const Category = () => {
                 <table className="min-w-full bg-white">
                     <thead className="bg-amber-100">
                         <tr>
-                            <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700">Image</th>
-                            <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700">Name</th>
-                            <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700">Actions</th>
+                            <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Image</th>
+                            <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Name</th>
+                            <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <CategoryRow categoryData={categories} handleEdit={handleEdit} handleDelete={handleDelete} />
+                    <tbody className="text-stone-700">
+                        {categories.length > 0 ? (
+                           <CategoryRow categoryData={categories} handleEdit={handleEdit} handleDelete={handleDelete} />
+                        ) : (
+                            <tr>
+                                <td colSpan="3" className="text-center py-8 text-stone-500">No categories found.</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

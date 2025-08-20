@@ -1,5 +1,8 @@
+// src/page/admin/Dashboard.jsx
+
 import React from 'react';
-import TotalProducts from '../../component/admin/TotalProducts'; // Import the new component
+import TotalProducts from '../../component/admin/TotalProducts';
+import TotalCategories from '../../component/admin/TotalCategories'; // 1. Import the new component
 
 const Dashboard = () => {
     return (
@@ -11,6 +14,9 @@ const Dashboard = () => {
                 
                 {/* Product Count Widget */}
                 <TotalProducts />
+
+                {/* Category Count Widget */}
+                <TotalCategories /> {/* 2. Add the new component here */}
 
                 {/* You can add more widgets here in the future */}
                 {/* <TotalUsers /> */}

@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { deleteProduct, getAllProducts } from '../../services/product';
+import { getAllCategories } from '../../services/category'; // Import category service
 import ProductRow from '../../component/admin/ProductRow';
 import AddProduct from '../../component/admin/AddProduct';
-import ViewProduct from '../../component/admin/ViewProduct'; // Import the new component
+import ViewProduct from '../../component/admin/ViewProduct';
 import { toast } from 'react-toastify';
 
 const Product = () => {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]); // State for categories
     const [showForm, setShowForm] = useState(false);
     const [productToEdit, setProductToEdit] = useState(null);
-    const [showView, setShowView] = useState(false); // State for viewing
-    const [productToView, setProductToView] = useState(null); // State for the product to view
+    const [showView, setShowView] = useState(false);
+    const [productToView, setProductToView] = useState(null);
 
-    const fetchProducts = () => {
+    // Fetch both products and categories
+    const fetchData = () => {
         getAllProducts().then(setProducts);
+        getAllCategories().then(setCategories);
     };
 
     useEffect(() => {
-        fetchProducts();
+        fetchData();
     }, []);
 
     const handleDelete = (id) => {
@@ -25,7 +29,7 @@ const Product = () => {
             deleteProduct(id)
                 .then(() => {
                     toast.success('Product deleted successfully.');
-                    fetchProducts();
+                    fetchData(); // Refresh data
                 })
                 .catch((error) => {
                     toast.error('Failed to delete product.');
@@ -47,10 +51,9 @@ const Product = () => {
     const handleFormClose = () => {
         setShowForm(false);
         setProductToEdit(null);
-        fetchProducts();
+        fetchData(); // Refresh data
     };
 
-    // --- New functions for viewing ---
     const handleView = (product) => {
         setProductToView(product);
         setShowView(true);
@@ -61,13 +64,13 @@ const Product = () => {
         setProductToView(null);
     };
     
-    // Conditional Rendering Logic
     if (showForm) {
         return <AddProduct productToEdit={productToEdit} onFormClose={handleFormClose} />;
     }
 
     if (showView) {
-        return <ViewProduct product={productToView} onViewClose={handleViewClose} />;
+        // Pass the categories list to the ViewProduct component
+        return <ViewProduct product={productToView} onViewClose={handleViewClose} categories={categories} />;
     }
 
     return (
@@ -87,7 +90,7 @@ const Product = () => {
                         <tr>
                             <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Image</th>
                             <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Name</th>
-                            <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Category</th>
+                            <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Categories</th>
                             <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Price</th>
                             <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Last Updated</th>
                             <th className="py-3 px-4 text-left text-sm font-semibold text-stone-700 uppercase tracking-wider">Actions</th>
@@ -96,9 +99,10 @@ const Product = () => {
                     <tbody className="text-stone-700">
                         <ProductRow 
                             productData={products} 
+                            categories={categories} // Pass categories list to ProductRow
                             handleEdit={handleEdit} 
                             handleDelete={handleDelete}
-                            handleView={handleView} // Pass the new handler
+                            handleView={handleView}
                         />
                     </tbody>
                 </table>

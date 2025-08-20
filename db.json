@@ -1,17 +1,58 @@
 {
   "products": [
     {
-      "id": "7dd6",
-      "name": "Cake",
-      "description": "cake",
-      "price": "100",
-      "category": "Cake",
-      "images": [
-        "http://localhost:4001/images/1755694976511-Doughnut.jpeg"
+      "id": "5f43",
+      "name": "Vegan Gluten Chocolate Donuts",
+      "description": "Vegan Gluten Chocolate Donuts",
+      "price": 2,
+      "categoryIds": [
+        "1",
+        "746e"
       ],
-      "updatedAt": "2025-08-20T13:02:56.519Z",
-      "createdAt": "2025-08-20T13:02:56.519Z"
+      "images": [
+        "http://localhost:4001/images/1755698847768-vegan-gluten-free-chocolate-donuts.jpg",
+        "http://localhost:4001/images/1755698847769-Chocolate-Doughnuts.png"
+      ],
+      "updatedAt": "2025-08-20T14:07:27.773Z",
+      "createdAt": "2025-08-20T14:07:27.773Z"
+    },
+    {
+      "id": "7af8",
+      "name": "Vegan Birthday Cake",
+      "description": "Vegan Birthday Cake",
+      "price": 20,
+      "categoryIds": [
+        "1",
+        "3b51",
+        "1f46"
+      ],
+      "images": [
+        "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
+      ],
+      "updatedAt": "2025-08-20T14:12:42.750Z",
+      "createdAt": "2025-08-20T14:11:49.926Z"
     }
   ],
-  "users": []
+  "categories": [
+    {
+      "name": "Vegan",
+      "image": "http://localhost:4001/images/1755698252325-Vegan-birthday-cake-f53ef46.png",
+      "id": "1"
+    },
+    {
+      "id": "746e",
+      "name": "Chocolate Doughnuts",
+      "image": "http://localhost:4001/images/1755698726057-Chocolate-Doughnuts.png"
+    },
+    {
+      "id": "3b51",
+      "name": "Cake",
+      "image": "http://localhost:4001/images/1755699044801-Birthday-cake-9bef8a3.jpg"
+    },
+    {
+      "id": "1f46",
+      "name": "Birthday Cake",
+      "image": "http://localhost:4001/images/1755699154658-CALSSIC-YELLOW-CAKE-with-chocolate-frosting-09062017.png"
+    }
+  ]
 }
