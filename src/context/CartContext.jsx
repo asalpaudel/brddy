@@ -1,23 +1,19 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import AuthModal from '../component/user/AuthModal';
 
-// Create the context
 const CartContext = createContext();
 
-// Define the reducer function to manage cart state
 const cartReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_TO_CART': {
             const { product, quantity = 1 } = action.payload;
             const existingItem = state.find(item => item.id === product.id);
-
             if (existingItem) {
-                // If item exists, update its quantity
                 return state.map(item =>
                     item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
                 );
             } else {
-                // If item is new, add it to the cart
                 return [...state, { ...product, quantity }];
             }
         }
@@ -30,9 +26,8 @@ const cartReducer = (state, action) => {
                 item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
             );
         }
-        // --- NEW ACTION ---
         case 'CLEAR_CART': {
-            return []; // Reset state to an empty array
+            return [];
         }
         case 'LOAD_CART': {
             return action.payload;
@@ -42,30 +37,51 @@ const cartReducer = (state, action) => {
     }
 };
 
-// Create the provider component
 export const CartProvider = ({ children }) => {
-    // Initialize state, trying to load from localStorage first
-    const [cartItems, dispatch] = useReducer(cartReducer, [], (initial) => {
-        try {
-            const localData = localStorage.getItem('brrdy-cart');
-            return localData ? JSON.parse(localData) : initial;
-        } catch (error) {
-            console.error("Could not parse cart data from localStorage", error);
-            return initial;
-        }
-    });
+    const [cartItems, dispatch] = useReducer(cartReducer, []);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const [currentUserEmail, setCurrentUserEmail] = useState(null);
 
-    // Persist cart state to localStorage whenever it changes
+    // Effect to get the current user on initial load
     useEffect(() => {
-        localStorage.setItem('brrdy-cart', JSON.stringify(cartItems));
-    }, [cartItems]);
+        const email = localStorage.getItem('USER_EMAIL');
+        setCurrentUserEmail(email);
+    }, []);
 
-    // Actions to be exposed
+    // Effect to load the correct cart when the user changes
+    useEffect(() => {
+        if (currentUserEmail) {
+            const localData = localStorage.getItem(`brrdy-cart-${currentUserEmail}`);
+            if (localData) {
+                dispatch({ type: 'LOAD_CART', payload: JSON.parse(localData) });
+            } else {
+                dispatch({ type: 'CLEAR_CART' });
+            }
+        } else {
+            dispatch({ type: 'CLEAR_CART' });
+        }
+    }, [currentUserEmail]);
+
+    // Effect to save the cart to storage when it changes
+    useEffect(() => {
+        if (currentUserEmail) {
+            localStorage.setItem(`brrdy-cart-${currentUserEmail}`, JSON.stringify(cartItems));
+        }
+    }, [cartItems, currentUserEmail]);
+
+    // --- Actions exposed to components ---
+
     const addToCart = (product, quantity = 1) => {
+        const isLoggedIn = !!localStorage.getItem('AUTH_TOKEN');
+        if (!isLoggedIn) {
+            setIsAuthModalOpen(true);
+            return;
+        }
         dispatch({ type: 'ADD_TO_CART', payload: { product, quantity } });
         toast.success(`${product.name} added to cart!`);
     };
 
+    // --- FIX: Added the missing function logic ---
     const removeFromCart = (id) => {
         dispatch({ type: 'REMOVE_FROM_CART', payload: { id } });
         toast.info("Item removed from cart.");
@@ -75,20 +91,24 @@ export const CartProvider = ({ children }) => {
         dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } });
     };
 
-    // --- NEW FUNCTION ---
     const clearCart = () => {
         dispatch({ type: 'CLEAR_CART' });
     };
+    
+    // Function to update the session, called on login/logout
+    const updateUserSession = () => {
+        const email = localStorage.getItem('USER_EMAIL');
+        setCurrentUserEmail(email);
+    };
 
     return (
-        // --- ADD clearCart TO THE CONTEXT VALUE ---
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, updateUserSession }}>
             {children}
+            {isAuthModalOpen && <AuthModal onClose={() => setIsAuthModalOpen(false)} />}
         </CartContext.Provider>
     );
 };
 
-// Custom hook to use the cart context easily
 export const useCart = () => {
     return useContext(CartContext);
 };

@@ -64,6 +64,15 @@
       "password": "ac7f4d1137e52d8ba221835e1e86209b07a9a72da76682be72fd0e001def8221",
       "role": "user",
       "createdAt": "2025-08-20T14:59:33.876Z"
+    },
+    {
+      "id": "d62d",
+      "firstName": "Sid",
+      "lastName": "Giri",
+      "email": "siddhartha@gmail.com",
+      "password": "ac7f4d1137e52d8ba221835e1e86209b07a9a72da76682be72fd0e001def8221",
+      "role": "user",
+      "createdAt": "2025-08-20T20:30:46.576Z"
     }
   ],
   "orders": [
@@ -144,6 +153,45 @@
       "status": "Cancelled",
       "orderDate": "2025-08-20T20:05:20.477Z",
       "lastUpdated": "2025-08-20T20:06:14.960Z"
+    },
+    {
+      "id": "0e83",
+      "customerInfo": {
+        "name": "Asal Paudel",
+        "phone": "9842822885",
+        "email": "guest@example.com"
+      },
+      "shippingDetails": {
+        "address": "Halesi Tuwachung\nSalle, Majhgau",
+        "mapLocation": {
+          "lat": 27.65604182542114,
+          "lng": 85.33923509065309
+        }
+      },
+      "items": [
+        {
+          "id": "7af8",
+          "name": "Vegan Birthday Cake",
+          "description": "Vegan Birthday Cake",
+          "price": 20,
+          "categoryIds": [
+            "1",
+            "3b51",
+            "1f46"
+          ],
+          "images": [
+            "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
+          ],
+          "updatedAt": "2025-08-20T14:12:42.750Z",
+          "createdAt": "2025-08-20T14:11:49.926Z",
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 20,
+      "remarks": "Happy birthday geda bahadur",
+      "status": "Pending",
+      "orderDate": "2025-08-20T20:16:40.843Z",
+      "lastUpdated": "2025-08-20T20:16:40.843Z"
     }
   ]
 }

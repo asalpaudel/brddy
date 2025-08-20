@@ -6,16 +6,16 @@ import { useCart } from '../../context/CartContext';
 const Header = () => {
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isProfileOpen, setIsProfileOpen] = useState(false); // State for the new dropdown
-    const profileRef = useRef(null); // Ref to detect clicks outside the dropdown
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const profileRef = useRef(null);
     
     const [userName, setUserName] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const { cartItems } = useCart();
+    // 1. Get updateUserSession along with cartItems
+    const { cartItems, updateUserSession } = useCart();
     const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-    // Effect to close the dropdown if user clicks outside of it
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -38,7 +38,6 @@ const Header = () => {
     }, []);
 
     const handleLogout = () => {
-        // Clear all user-related data from storage
         localStorage.removeItem('AUTH_TOKEN');
         localStorage.removeItem('USER_EMAIL');
         localStorage.removeItem('USER_ROLE');
@@ -46,14 +45,17 @@ const Header = () => {
         
         setIsLoggedIn(false);
         setUserName(null);
-        setIsProfileOpen(false); // Close dropdown upon logout
+        setIsProfileOpen(false);
+        
+        // 2. Call this on logout to clear the session cart
+        updateUserSession(); 
+        
         navigate('/login');
     };
 
     const navLinks = [
         { href: '/', label: 'Home' },
         { href: '/products', label: 'Products' },
-        // The "My Orders" link is now in the dropdown, so it can be removed from here if you wish
     ];
 
     return (
@@ -75,10 +77,8 @@ const Header = () => {
                         </div>
                     </div>
 
-                    {/* --- Right side icons --- */}
                     <div className="hidden md:flex items-center space-x-4">
                         {isLoggedIn ? (
-                            // --- NEW AVATAR DROPDOWN ---
                             <div className="relative" ref={profileRef}>
                                 <button onClick={() => setIsProfileOpen(!isProfileOpen)} className="flex items-center gap-2 text-stone-700 font-medium p-2 rounded-md hover:bg-amber-100">
                                     <HiOutlineUserCircle className="h-8 w-8" />
@@ -103,7 +103,6 @@ const Header = () => {
                                 )}
                             </div>
                         ) : (
-                            // --- Buttons for logged-out users ---
                             <>
                                 <NavLink to="/login" className="text-stone-700 hover:text-amber-600 font-medium">
                                     Sign In
@@ -114,7 +113,6 @@ const Header = () => {
                             </>
                         )}
                         
-                        {/* Cart Icon */}
                         <NavLink to="/cart" aria-label="Open cart" className="relative text-stone-700 p-2 rounded-full hover:bg-amber-100">
                             <HiOutlineShoppingCart className="h-7 w-7" />
                             {totalItemsInCart > 0 && (
@@ -125,7 +123,6 @@ const Header = () => {
                         </NavLink>
                     </div>
                     
-                    {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center">
                         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="inline-flex items-center justify-center p-2 rounded-md text-stone-700">
                             {isMobileMenuOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
@@ -134,10 +131,9 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
             {isMobileMenuOpen && (
                 <div className="md:hidden">
-                    {/* You can update the mobile menu here as well if needed */}
+                    {/* Mobile menu can be updated as well if needed */}
                 </div>
             )}
         </nav>

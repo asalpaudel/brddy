@@ -1,14 +1,14 @@
-// src/page/Login.jsx
-
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { HiOutlineMail, HiLockClosed, HiEye, HiEyeOff } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { doLogin } from '../services/auth';
+import { useCart } from '../context/CartContext'; // 1. Import useCart
 
 const Login = () => {
     const navigate = useNavigate();
+    const { updateUserSession } = useCart(); // 2. Get the session updater function
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,18 +25,16 @@ const Login = () => {
         }
 
         try {
-            // The doLogin function now returns an object with login status and user role
             const { loggedIn, role } = await doLogin(email, password);
             
             if (loggedIn) {
-                toast.success(`Login successful, welcome ${email}`);
-                // **REDIRECT LOGIC:**
-                // If the user is an 'admin', go to the dashboard.
-                // Otherwise, redirect to the home page.
+                updateUserSession(); // 3. Call this on successful login
+                toast.success(`Login successful, welcome!`);
+                
                 if (role === 'admin') {
                     navigate('/admin/dashboard');
                 } else {
-                    navigate('/'); // Redirect regular users to the home page
+                    navigate('/');
                 }
             } else {
                 toast.error("Invalid email or password");
@@ -53,7 +51,6 @@ const Login = () => {
         <div className="flex items-center justify-center min-h-screen bg-orange-50/80 p-4">
             <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
 
-                {/* Logo and Heading */}
                 <div className="flex flex-col items-center mb-6">
                     <NavLink to="/" className="text-4xl font-bold text-amber-900 mb-2" style={{ fontFamily: 'Pacifico, cursive' }}>
                         Brrdy
@@ -63,9 +60,7 @@ const Login = () => {
                     </h2>
                 </div>
 
-                {/* Login Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Email Input */}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-stone-700">
                             Email address
@@ -87,7 +82,6 @@ const Login = () => {
                         </div>
                     </div>
 
-                    {/* Password Input */}
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-stone-700">
                             Password
@@ -118,7 +112,6 @@ const Login = () => {
                     
                     {loginError && <div className="mt-1 text-sm text-red-600 text-center">{loginError}</div>}
                     
-                    {/* Submit Button */}
                     <div>
                         <button
                             type="submit"
@@ -129,11 +122,9 @@ const Login = () => {
                     </div>
                 </form>
 
-                {/* Sign Up Link */}
                 <div className="mt-6 text-center">
                     <p className="text-sm text-stone-700">
                         Don't have an account?{' '}
-                        {/* Corrected this link to point to /register */}
                         <NavLink to="/register" className="font-medium text-stone-700 hover:text-amber-600">
                             Sign Up
                         </NavLink>
