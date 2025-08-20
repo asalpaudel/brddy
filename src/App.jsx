@@ -1,4 +1,3 @@
-
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -14,6 +13,9 @@ import Home from './page/user/Home';
 import Products from './page/user/Products';
 import ProductDetail from './page/user/ProductDetail';
 import Cart from './page/user/Cart';
+import OrdersAdmin from './page/admin/Orders';
+import Checkout from './page/user/Checkout';
+import MyOrders from './page/user/MyOrders';
 
 
 function App() {
@@ -25,7 +27,9 @@ function App() {
             <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetail />} />
-            <Route path="cart" element={<Cart />} /> 
+            <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="my-orders" element={<MyOrders />} />
           </Route>
 
           <Route path="/login" element={<Login />} />
@@ -35,6 +39,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="products" element={<Product />} />
             <Route path="categories" element={<Category />} />
+            <Route path="orders" element={<OrdersAdmin />} />
           </Route>
         </Routes>
       </BrowserRouter>
