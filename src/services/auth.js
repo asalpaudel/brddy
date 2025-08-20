@@ -1,5 +1,3 @@
-// src/services/auth.js
-
 import axios from 'axios';
 import { sha256 } from '../utils/encryption';
 
@@ -20,6 +18,9 @@ export const doLogin = async (email, password) => {
             localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN);
             localStorage.setItem('USER_EMAIL', ADMIN_CREDENTIALS.email);
             localStorage.setItem('USER_ROLE', ADMIN_CREDENTIALS.role);
+            // --- ADDED LINE ---
+            // Save a default name for the admin user
+            localStorage.setItem('USER_FNAME', 'Admin');
             return { loggedIn: true, role: 'admin' };
         }
 
@@ -29,6 +30,9 @@ export const doLogin = async (email, password) => {
             localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN);
             localStorage.setItem('USER_EMAIL', user.email);
             localStorage.setItem('USER_ROLE', user.role || 'user');
+            // --- ADDED LINE ---
+            // Save the logged-in user's first name
+            localStorage.setItem('USER_FNAME', user.firstName);
             return { loggedIn: true, role: user.role || 'user' };
         } else {
             return { loggedIn: false, role: null };
@@ -39,7 +43,6 @@ export const doLogin = async (email, password) => {
     }
 };
 
-// **UPDATED FUNCTION**
 export const doRegister = async (firstName, lastName, email, password) => {
     try {
         const checkResponse = await axios.get(`${API_URL}?email=${email}`);
@@ -49,7 +52,6 @@ export const doRegister = async (firstName, lastName, email, password) => {
 
         const hashedPassword = await sha256(password);
 
-        // Include the new fields in the user object
         const newUser = {
             firstName,
             lastName,
