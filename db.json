@@ -54,5 +54,16 @@
       "name": "Birthday Cake",
       "image": "http://localhost:4001/images/1755699154658-CALSSIC-YELLOW-CAKE-with-chocolate-frosting-09062017.png"
     }
+  ],
+  "users": [
+    {
+      "id": "f7a3",
+      "firstName": "Asal",
+      "lastName": "Paudel",
+      "email": "paudel.asal00@gmail.com",
+      "password": "ac7f4d1137e52d8ba221835e1e86209b07a9a72da76682be72fd0e001def8221",
+      "role": "user",
+      "createdAt": "2025-08-20T14:59:33.876Z"
+    }
   ]
 }

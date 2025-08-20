@@ -1,54 +1,43 @@
-// src/pages/Login.jsx
+// src/page/Login.jsx
 
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { HiOutlineMail, HiLockClosed, HiEye, HiEyeOff } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-// The real doLogin function is now imported from your services
 import { doLogin } from '../services/auth';
 
 const Login = () => {
     const navigate = useNavigate();
     
-    // State to manage form inputs and password visibility
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-
-    // State for validation errors and general login error
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
     const [loginError, setLoginError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Reset errors on each submission attempt
-        setEmailError('');
-        setPasswordError('');
         setLoginError('');
 
-        let hasError = false;
-        if (!email.trim()) {
-            setEmailError("Email is required");
-            hasError = true;
-        }
-        if (!password.trim()) {
-            setPasswordError("Password is required");
-            hasError = true;
-        }
-
-        if (hasError) {
+        if (!email.trim() || !password.trim()) {
+            setLoginError("Email and password are required");
             return;
         }
 
         try {
-            const loginStatus = await doLogin(email, password);
-            if (loginStatus) {
+            // The doLogin function now returns an object with login status and user role
+            const { loggedIn, role } = await doLogin(email, password);
+            
+            if (loggedIn) {
                 toast.success(`Login successful, welcome ${email}`);
-                navigate('/admin/dashboard');
+                // **REDIRECT LOGIC:**
+                // If the user is an 'admin', go to the dashboard.
+                // Otherwise, redirect to the home page.
+                if (role === 'admin') {
+                    navigate('/admin/dashboard');
+                } else {
+                    navigate('/'); // Redirect regular users to the home page
+                }
             } else {
                 toast.error("Invalid email or password");
                 setLoginError('Invalid email or password');
@@ -76,80 +65,64 @@ const Login = () => {
 
                 {/* Login Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Email Input */}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-stone-700">
                             Email address
                         </label>
                         <div className="mt-1 relative rounded-md shadow-sm">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <HiOutlineMail className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                <HiOutlineMail className="h-5 w-5 text-gray-400" />
                             </div>
                             <input
                                 id="email"
                                 name="email"
                                 type="email"
-                                autoComplete="email"
                                 required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-amber-500 focus:border-amber-500 text-stone-700 sm:text-sm transition-colors duration-300"
+                                className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md"
                                 placeholder="you@example.com"
                             />
                         </div>
-                        {emailError && <div className="mt-1 text-sm text-red-600">{emailError}</div>}
                     </div>
 
+                    {/* Password Input */}
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-stone-700">
                             Password
                         </label>
                         <div className="mt-1 relative rounded-md shadow-sm">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <HiLockClosed className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                <HiLockClosed className="h-5 w-5 text-gray-400" />
                             </div>
                             <input
                                 id="password"
                                 name="password"
                                 type={showPassword ? 'text' : 'password'}
-                                autoComplete="current-password"
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="appearance-none block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-amber-500 focus:border-amber-500 text-stone-700 sm:text-sm transition-colors duration-300"
+                                className="appearance-none block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md"
                                 placeholder="••••••••"
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center"
                             >
-                                {showPassword ? (
-                                    <HiEyeOff className="h-5 w-5 text-gray-400 hover:text-stone-700 transition-colors duration-200" />
-                                ) : (
-                                    <HiEye className="h-5 w-5 text-gray-400 hover:text-stone-700 transition-colors duration-200" />
-                                )}
+                                {showPassword ? <HiEyeOff className="h-5 w-5 text-gray-400" /> : <HiEye className="h-5 w-5 text-gray-400" />}
                             </button>
                         </div>
-                        {passwordError && <div className="mt-1 text-sm text-red-600">{passwordError}</div>}
                     </div>
-
-                    <div className="flex items-center">
-                        <input
-                            id="remember-me"
-                            name="remember-me"
-                            type="checkbox"
-                            className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
-                        />
-                        <label htmlFor="remember-me" className="ml-2 block text-sm text-stone-700">
-                            Remember me
-                        </label>
-                    </div>
+                    
                     {loginError && <div className="mt-1 text-sm text-red-600 text-center">{loginError}</div>}
+                    
+                    {/* Submit Button */}
                     <div>
                         <button
                             type="submit"
-                            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors duration-300"
+                            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-amber-500 hover:bg-amber-600"
                         >
                             Log in
                         </button>
@@ -160,7 +133,8 @@ const Login = () => {
                 <div className="mt-6 text-center">
                     <p className="text-sm text-stone-700">
                         Don't have an account?{' '}
-                        <NavLink to="/signup" className="font-medium text-stone-700 hover:text-amber-600">
+                        {/* Corrected this link to point to /register */}
+                        <NavLink to="/register" className="font-medium text-stone-700 hover:text-amber-600">
                             Sign Up
                         </NavLink>
                     </p>
