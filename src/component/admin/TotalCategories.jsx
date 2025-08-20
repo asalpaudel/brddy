@@ -1,6 +1,4 @@
-// src/component/admin/TotalCategories.jsx
-
-import React, { useState, useEffect } from 'react'; // <-- This line is now fixed
+import React, { useState, useEffect } from 'react'; 
 import { HiOutlineTag } from 'react-icons/hi';
 import { getAllCategories } from '../../services/category';
 

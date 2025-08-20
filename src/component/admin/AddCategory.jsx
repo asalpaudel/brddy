@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { createCategory, updateCategory } from '../../services/category';
-import { uploadImage } from '../../services/product'; // Re-use the image upload service
+import { uploadImage } from '../../services/product'; 
 import { HiOutlinePhotograph } from 'react-icons/hi';
 
 const AddCategory = ({ categoryToEdit, onFormClose }) => {
     const [name, setName] = useState('');
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
-    const [isLoading, setIsLoading] = useState(false); // To disable button during submission
+    const [isLoading, setIsLoading] = useState(false); 
 
     useEffect(() => {
         if (categoryToEdit) {
@@ -20,7 +20,7 @@ const AddCategory = ({ categoryToEdit, onFormClose }) => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Basic validation for image type
+
             if (!file.type.startsWith('image/')) {
                 toast.error("Please upload a valid image file (PNG, JPG, etc.).");
                 return;

@@ -3,12 +3,11 @@ import { HiPencil, HiTrash, HiEye } from 'react-icons/hi';
 
 const ProductRow = ({ productData, categories, handleEdit, handleDelete, handleView }) => {
     
-    // Helper function to get category names from their IDs
     const getCategoryNames = (categoryIds) => {
         if (!categoryIds || !categories || !categories.length) return 'N/A';
         return categoryIds
             .map(id => categories.find(cat => cat.id === id)?.name)
-            .filter(Boolean) // Remove any undefined if a category was deleted
+            .filter(Boolean) 
             .join(', ');
     };
 
