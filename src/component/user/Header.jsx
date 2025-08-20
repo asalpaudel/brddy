@@ -3,16 +3,21 @@
 import React, { useState, useEffect } from 'react';
 import { HiOutlineShoppingCart, HiMenu, HiX, HiOutlineLogout } from 'react-icons/hi';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useCart } from '../../context/CartContext'; // 1. Import useCart hook
 
 const Header = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     
-    // State to hold user's name and login status
     const [userName, setUserName] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // Check for auth token when the component mounts
+    // 2. Get cartItems from the context
+    const { cartItems } = useCart();
+
+    // 3. Calculate the total number of items in the cart
+    const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
+
     useEffect(() => {
         const token = localStorage.getItem('AUTH_TOKEN');
         const fName = localStorage.getItem('USER_FNAME');
@@ -23,13 +28,11 @@ const Header = () => {
     }, []);
 
     const handleLogout = () => {
-        // Clear local storage
         localStorage.removeItem('AUTH_TOKEN');
         localStorage.removeItem('USER_EMAIL');
         localStorage.removeItem('USER_ROLE');
         localStorage.removeItem('USER_FNAME');
         
-        // Update state and redirect
         setIsLoggedIn(false);
         setUserName(null);
         navigate('/login');
@@ -61,10 +64,8 @@ const Header = () => {
                         </div>
                     </div>
 
-                    {/* --- Dynamic User Section --- */}
                     <div className="hidden md:flex items-center space-x-4">
                         {isLoggedIn ? (
-                            // Show if user IS logged in
                             <>
                                 <span className="text-stone-700 font-medium">Welcome, {userName}</span>
                                 <button
@@ -76,7 +77,6 @@ const Header = () => {
                                 </button>
                             </>
                         ) : (
-                            // Show if user IS NOT logged in
                             <>
                                 <NavLink to="/login" className="text-stone-700 hover:text-amber-600 font-medium transition-colors duration-300">
                                     Sign In
@@ -86,10 +86,15 @@ const Header = () => {
                                 </NavLink>
                             </>
                         )}
-                        <button aria-label="Open cart" className="relative text-stone-700 hover:text-amber-600 p-2 rounded-full hover:bg-amber-100 transition-colors duration-300">
+                        {/* 4. Updated cart icon to be a link and display item count */}
+                        <NavLink to="/cart" aria-label="Open cart" className="relative text-stone-700 hover:text-amber-600 p-2 rounded-full hover:bg-amber-100 transition-colors duration-300">
                             <HiOutlineShoppingCart className="h-7 w-7" />
-                            <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">3</span>
-                        </button>
+                            {totalItemsInCart > 0 && (
+                                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                                    {totalItemsInCart}
+                                </span>
+                            )}
+                        </NavLink>
                     </div>
                     
                     <div className="md:hidden flex items-center">
@@ -100,7 +105,6 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu (also dynamic) */}
             {isOpen && (
                 <div className="md:hidden">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

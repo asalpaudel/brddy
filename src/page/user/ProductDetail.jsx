@@ -4,12 +4,14 @@ import { getProductById } from '../../services/product';
 import { getAllCategories } from '../../services/category';
 import { Carousel } from 'antd';
 import { toast } from 'react-toastify';
+import { useCart } from '../../context/CartContext'; // Added import
 
 const ProductDetail = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { addToCart } = useCart(); // Added hook call
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -91,9 +93,11 @@ const ProductDetail = () => {
                             <dd className="text-sm text-stone-900">{getCategoryNames()}</dd>
                         </dl>
                     </div>
-                     <button className="w-full mt-4 bg-amber-500 text-white px-5 py-3 rounded-md hover:bg-amber-600 transition-colors duration-300 font-medium shadow-sm">
-                        Add to Cart
-                    </button>
+                     <button onClick={() => addToCart(product)}
+                        className="w-full mt-4 bg-amber-500 text-white px-5 py-3 rounded-md hover:bg-amber-600 transition-colors duration-300 font-medium shadow-sm"
+                    >
+                       Add to Cart
+                      </button>
                 </div>
             </div>
         </div>
