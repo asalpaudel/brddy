@@ -1,4 +1,17 @@
 {
-  "products": [],
+  "products": [
+    {
+      "id": "7dd6",
+      "name": "Cake",
+      "description": "cake",
+      "price": "100",
+      "category": "Cake",
+      "images": [
+        "http://localhost:4001/images/1755694976511-Doughnut.jpeg"
+      ],
+      "updatedAt": "2025-08-20T13:02:56.519Z",
+      "createdAt": "2025-08-20T13:02:56.519Z"
+    }
+  ],
   "users": []
 }

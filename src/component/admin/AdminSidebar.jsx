@@ -1,13 +1,12 @@
-// src/component/admin/AdminSidebar.jsx
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { HiOutlineViewGrid, HiOutlineCube, HiOutlineUsers, HiOutlineCog, HiOutlineChevronLeft } from 'react-icons/hi';
+import { HiOutlineViewGrid, HiOutlineCube, HiOutlineTag, HiOutlineUsers, HiOutlineCog, HiOutlineChevronLeft } from 'react-icons/hi';
 
 const AdminSidebar = ({ isOpen, toggleSidebar }) => {
     const sidebarLinks = [
         { to: '/admin/dashboard', label: 'Dashboard', icon: HiOutlineViewGrid },
         { to: '/admin/products', label: 'Products', icon: HiOutlineCube },
+        { to: '/admin/categories', label: 'Categories', icon: HiOutlineTag }, // New Link
         { to: '/admin/users', label: 'Users', icon: HiOutlineUsers },
         { to: '/admin/settings', label: 'Settings', icon: HiOutlineCog },
     ];
