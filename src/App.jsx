@@ -17,6 +17,7 @@ import OrdersAdmin from './page/admin/Orders';
 import Checkout from './page/user/Checkout';
 import MyOrders from './page/user/MyOrders';
 import AboutUs from './page/user/Aboutus';
+import ContactUs from './page/user/ContactUs';
 
 
 function App() {
@@ -25,9 +26,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route path="home" element={<Home />} />
             <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
             <Route path="about" element={<AboutUs/>} />
+            <Route path="contact" element={<ContactUs/>} />
             <Route path="products/:id" element={<ProductDetail />} />
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />

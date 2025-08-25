@@ -7,8 +7,6 @@ const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity } = useCart();
 
     const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const tax = subtotal * 0.13; // Example tax rate (13%)
-    const total = subtotal + tax;
 
     if (cartItems.length === 0) {
         return (
@@ -45,29 +43,18 @@ const Cart = () => {
                                 <span className="px-4 py-1">{item.quantity}</span>
                                 <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-2 hover:bg-gray-100"><HiPlus /></button>
                             </div>
-                            <p className="font-semibold w-20 text-right">${(item.price * item.quantity).toFixed(2)}</p>
+                            <p className="font-semibold w-20 text-right">Rs. {(item.price * item.quantity).toFixed(2)}</p>
                             <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 p-2"><HiOutlineTrash size={20} /></button>
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div className="mt-8 flex flex-col sm:flex-row justify-between items-start gap-8">
-                <div className="w-full sm:w-1/2">
-                    {/* Notes or Coupon section can go here */}
-                </div>
+            <div className="mt-8 flex flex-col sm:flex-row justify-end items-start gap-8">
                 <div className="w-full sm:w-1/2 space-y-3 p-6 bg-gray-50 rounded-lg">
-                    <div className="flex justify-between text-stone-600">
-                        <span>Subtotal</span>
-                        <span>${subtotal.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between text-stone-600">
-                        <span>Taxes (13%)</span>
-                        <span>${tax.toFixed(2)}</span>
-                    </div>
                     <div className="flex justify-between font-bold text-xl text-stone-800 border-t pt-3">
                         <span>Total</span>
-                        <span>${total.toFixed(2)}</span>
+                        <span>Rs. {subtotal.toFixed(2)}</span>
                     </div>
                     <Link to="/checkout"
                         className="w-full block text-center mt-4 bg-amber-500 text-white py-3 rounded-md hover:bg-amber-600 transition-colors"

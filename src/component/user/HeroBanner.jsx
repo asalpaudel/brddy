@@ -1,53 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import banner from '../../assets/banner.png';
 
 const HeroBanner = () => {
     const navigate = useNavigate();
-    const videoRef = useRef(null);
-    const scrollTargetRef = useRef({ target: 0, current: 0 });
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        let animationFrameId = null;
-
-        // Linear interpolation function
-        const lerp = (start, end, factor) => start * (1 - factor) + end * factor;
-
-        const handleScroll = () => {
-            // Map scroll to fraction (0 → 1)
-            const scrollPosition = window.scrollY;
-            const animationScrollRange = 700; 
-            const scrollFraction = Math.min(scrollPosition / animationScrollRange, 1);
-            scrollTargetRef.current.target = scrollFraction;
-        };
-
-        const animateVideo = () => {
-            const { target, current } = scrollTargetRef.current;
-            const newCurrent = lerp(current, target, 0.12); // smoother & faster
-            scrollTargetRef.current.current = newCurrent;
-
-            if (video.duration) {
-                video.currentTime = video.duration * newCurrent;
-            }
-
-            animationFrameId = requestAnimationFrame(animateVideo);
-        };
-
-        const onLoadedMetadata = () => {
-            window.addEventListener('scroll', handleScroll, { passive: true });
-            animateVideo();
-        };
-
-        video.addEventListener('loadedmetadata', onLoadedMetadata);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            video.removeEventListener('loadedmetadata', onLoadedMetadata);
-        };
-    }, []);
 
     const handleOrderNow = () => {
         navigate('/products');
@@ -60,28 +16,24 @@ const HeroBanner = () => {
                 {/* Text */}
                 <div className="md:col-span-2 text-center md:text-left">
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-amber-900 leading-tight mb-4">
-                        The Perfect Baked Cake Everyday!
+                        Freshly Baked Bread, Everyday!
                     </h1>
                     <p className="text-lg text-slate-700 mb-8">
-                        Freshly baked goods, crafted with passion and the finest ingredients to bring you a little slice of heaven.
+                        From crusty loaves to soft rolls, we bake daily with love and the finest ingredients—bringing the aroma of fresh bread straight to your table.
                     </p>
                     <button
                         onClick={handleOrderNow}
-                        className="bg-amber-500 text-white px-8 py-3 rounded-md hover:bg-amber-600 transition-colors duration-100 font-semibold shadow-lg text-lg"
+                        className="border text-amber-600 px-8 py-3 rounded-md hover:bg-amber-600 hover:text-white transition-colors duration-100 font-semibold shadow-lg text-lg"
                     >
                         Order Now
                     </button>
                 </div>
 
-                {/* Video */}
-                <div className="md:col-span-3 flex justify-center items-center">
-                    <video
-                        ref={videoRef}
-                        src="/videos/fasterone.mp4"
-                        className="w-full h-auto rounded-lg shadow-2xl"
-                        playsInline
-                        muted
-                        preload="auto"
+                <div className="md:col-span-3 hidden md:flex justify-center items-center">
+                    <img
+                        src={banner}
+                        alt="Freshly baked bread basket"
+                        className="w-full h-auto rounded-lg"
                     />
                 </div>
             </div>

@@ -45,13 +45,15 @@ const Checkout = () => {
   // Effect to check cart and pre-fill user data
   useEffect(() => {
     if (cartItems.length === 0) {
-      toast.error('Your cart is empty. Redirecting you to products page.');
       navigate('/products');
     }
     const userEmail = localStorage.getItem('USER_EMAIL');
     const userFName = localStorage.getItem('USER_FNAME');
+    const userLName = localStorage.getItem('USER_LNAME');
+    
     if (userEmail) {
-        setCustomerInfo(prev => ({ ...prev, email: userEmail, name: userFName || '' }));
+        const fullName = `${userFName || ''} ${userLName || ''}`.trim();
+        setCustomerInfo(prev => ({ ...prev, email: userEmail, name: fullName }));
     }
   }, [cartItems, navigate]);
 
@@ -63,7 +65,6 @@ const Checkout = () => {
 
   // --- MAP FUNCTIONS ---
 
-  // 1. Get location via device GPS
   const handleGetCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -71,7 +72,7 @@ const Checkout = () => {
         const newPos = { lat: latitude, lng: longitude };
         setMapPosition(newPos);
         if (mapRef.current) {
-            mapRef.current.flyTo(newPos, 15); // Zoom in closer
+            mapRef.current.flyTo(newPos, 15); 
         }
         toast.success("Location pinpointed!");
       },
@@ -81,7 +82,6 @@ const Checkout = () => {
     );
   };
 
-  // 2. Get location via manual text search
   const handleLocationSearch = async (e) => {
     e.preventDefault();
     if (!locationQuery) return;
@@ -101,8 +101,6 @@ const Checkout = () => {
         toast.error("Failed to search for the location.");
     }
   };
-
-  // --- FORM SUBMISSION ---
   
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
@@ -133,10 +131,7 @@ const Checkout = () => {
     try {
       await placeOrder(orderData);
       toast.success('Your order has been placed successfully!');
-      
-      // --- UPDATED: Call clearCart() on success ---
       clearCart();
-      
       navigate('/my-orders');
     } catch (error) {
       toast.error('There was an error placing your order. Please try again.');
@@ -144,92 +139,92 @@ const Checkout = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold text-stone-800 mb-6">Checkout</h1>
-      <form onSubmit={handleSubmitOrder} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="max-w-3xl mx-auto p-4">
+      <h1 className="text-3xl font-bold text-stone-800 mb-6 text-center">Checkout</h1>
+      <form onSubmit={handleSubmitOrder} className="space-y-8">
         
-        {/* Left Side: Form Fields */}
-        <div className="space-y-6 bg-white p-8 rounded-lg shadow-lg h-fit">
-          <h2 className="text-xl font-semibold">Shipping Information</h2>
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-stone-700">Full Name</label>
-            <input type="text" name="name" id="name" value={customerInfo.name} onChange={handleInputChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required />
-          </div>
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-stone-700">Phone Number</label>
-            <input type="tel" name="phone" id="phone" value={customerInfo.phone} onChange={handleInputChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required />
-          </div>
-          <div>
-            <label htmlFor="shippingAddress" className="block text-sm font-medium text-stone-700">Full Shipping Address</label>
-            <textarea name="shippingAddress" id="shippingAddress" value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} rows="3" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required></textarea>
-          </div>
-          <div>
-            <label htmlFor="remarks" className="block text-sm font-medium text-stone-700">Order Remarks (Optional)</label>
-            <textarea name="remarks" id="remarks" value={remarks} onChange={(e) => setRemarks(e.target.value)} rows="3" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="e.g., 'Happy Birthday!' for a cake."></textarea>
-          </div>
-        </div>
-
-        {/* Right Side: Map and Order Summary */}
-        <div className="space-y-6">
-            <div className="bg-white p-8 rounded-lg shadow-lg">
-                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-semibold">Pin Delivery Location</h2>
-                    <button 
-                        type="button" 
-                        onClick={handleGetCurrentLocation}
-                        className="flex items-center gap-2 text-sm bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition-colors"
-                    >
-                        <HiLocationMarker/>
-                        Use My Location
-                    </button>
-                 </div>
-                
-                <form onSubmit={handleLocationSearch} className="flex gap-2 mb-4">
-                    <input 
-                        type="text"
-                        value={locationQuery}
-                        onChange={(e) => setLocationQuery(e.target.value)}
-                        placeholder="e.g., Balaju, Kathmandu"
-                        className="block w-full border-gray-300 rounded-md shadow-sm"
-                    />
-                    <button type="submit" className="bg-gray-700 text-white px-4 rounded-md hover:bg-gray-800 transition-colors">
-                        <HiSearch/>
-                    </button>
-                </form>
-
-                 <div className="h-64 w-full rounded-lg overflow-hidden border">
-                    <MapContainer ref={mapRef} center={mapPosition} zoom={13} style={{ height: '100%', width: '100%' }}>
-                        <TileLayer
-                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        />
-                        <Marker position={mapPosition}></Marker>
-                        <MapEvents setPosition={setMapPosition} />
-                    </MapContainer>
-                 </div>
-            </div>
-             <div className="bg-white p-8 rounded-lg shadow-lg">
-                <h2 className="text-xl font-semibold">Order Summary</h2>
-                <ul className="divide-y my-4">
-                    {cartItems.map(item => (
-                        <li key={item.id} className="flex justify-between py-2 text-sm">
-                            <span>{item.name} x {item.quantity}</span>
-                            <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
-                        </li>
-                    ))}
-                </ul>
-                <div className="flex justify-between font-bold text-lg border-t pt-4">
-                    <span>Total</span>
-                    <span>${cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}</span>
+        {/* Shipping & Delivery Section */}
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-6">Shipping & Delivery</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left side: Form fields */}
+                <div className="space-y-4">
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-stone-700">Full Name</label>
+                        <input type="text" name="name" id="name" value={customerInfo.name} onChange={handleInputChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required />
+                    </div>
+                    <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-stone-700">Phone Number</label>
+                        <input type="tel" name="phone" id="phone" value={customerInfo.phone} onChange={handleInputChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required />
+                    </div>
+                    <div>
+                        <label htmlFor="shippingAddress" className="block text-sm font-medium text-stone-700">Full Shipping Address</label>
+                        <textarea name="shippingAddress" id="shippingAddress" value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} rows="3" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required></textarea>
+                    </div>
+                    <div>
+                        <label htmlFor="remarks" className="block text-sm font-medium text-stone-700">Order Remarks (Optional)</label>
+                        <textarea name="remarks" id="remarks" value={remarks} onChange={(e) => setRemarks(e.target.value)} rows="3" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="e.g., 'Happy Birthday!' for a cake."></textarea>
+                    </div>
                 </div>
-             </div>
+                {/* Right side: Map */}
+                <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                        <h3 className="text-sm font-medium text-stone-700">Pin Delivery Location</h3>
+                        <button 
+                            type="button" 
+                            onClick={handleGetCurrentLocation}
+                            className="flex items-center gap-1 text-xs bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 transition-colors"
+                        >
+                            <HiLocationMarker/>
+                            Use My Location
+                        </button>
+                    </div>
+                    <form onSubmit={handleLocationSearch} className="flex gap-2">
+                        <input 
+                            type="text"
+                            value={locationQuery}
+                            onChange={(e) => setLocationQuery(e.target.value)}
+                            placeholder="e.g., Balaju, Kathmandu"
+                            className="block w-full border-gray-300 rounded-md shadow-sm text-sm"
+                        />
+                        <button type="submit" className="bg-gray-700 text-white px-3 rounded-md hover:bg-gray-800 transition-colors">
+                            <HiSearch/>
+                        </button>
+                    </form>
+                    <div className="h-64 w-full rounded-lg overflow-hidden border">
+                        <MapContainer ref={mapRef} center={mapPosition} zoom={13} style={{ height: '100%', width: '100%' }}>
+                            <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            <Marker position={mapPosition}></Marker>
+                            <MapEvents setPosition={setMapPosition} />
+                        </MapContainer>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        {/* Submit Button spanning both columns */}
-        <div className="md:col-span-2 text-right">
-             <button type="submit" className="bg-amber-500 text-white px-8 py-3 rounded-md hover:bg-amber-600 transition-colors text-lg font-medium shadow-md">
-                Place Order
-            </button>
+
+        {/* Order Summary and Placement */}
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
+            <ul className="divide-y my-4">
+                {cartItems.map(item => (
+                    <li key={item.id} className="flex justify-between py-2">
+                        <span>{item.name} x {item.quantity}</span>
+                        <span className="font-medium">Rs. {(item.price * item.quantity).toFixed(2)}</span>
+                    </li>
+                ))}
+            </ul>
+            <div className="flex justify-between font-bold text-xl border-t pt-4">
+                <span>Total</span>
+                <span>Rs. {cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}</span>
+            </div>
+            <div className="mt-6 text-center">
+                <button type="submit" className="w-full max-w-xs bg-amber-500 text-white px-8 py-3 rounded-md hover:bg-amber-600 transition-colors text-lg font-medium shadow-md">
+                    Place Order
+                </button>
+            </div>
         </div>
       </form>
     </div>

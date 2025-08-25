@@ -18,9 +18,8 @@ export const doLogin = async (email, password) => {
             localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN);
             localStorage.setItem('USER_EMAIL', ADMIN_CREDENTIALS.email);
             localStorage.setItem('USER_ROLE', ADMIN_CREDENTIALS.role);
-            // --- ADDED LINE ---
-            // Save a default name for the admin user
             localStorage.setItem('USER_FNAME', 'Admin');
+            localStorage.setItem('USER_LNAME', 'User'); // Added admin last name
             return { loggedIn: true, role: 'admin' };
         }
 
@@ -30,9 +29,8 @@ export const doLogin = async (email, password) => {
             localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN);
             localStorage.setItem('USER_EMAIL', user.email);
             localStorage.setItem('USER_ROLE', user.role || 'user');
-            // --- ADDED LINE ---
-            // Save the logged-in user's first name
             localStorage.setItem('USER_FNAME', user.firstName);
+            localStorage.setItem('USER_LNAME', user.lastName); // Added user last name
             return { loggedIn: true, role: user.role || 'user' };
         } else {
             return { loggedIn: false, role: null };

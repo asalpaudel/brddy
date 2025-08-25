@@ -99,7 +99,7 @@ const Product = () => {
                     <tbody className="text-stone-700">
                         <ProductRow 
                             productData={products} 
-                            categories={categories} // Pass categories list to ProductRow
+                            categories={categories} 
                             handleEdit={handleEdit} 
                             handleDelete={handleDelete}
                             handleView={handleView}

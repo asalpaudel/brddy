@@ -1,58 +1,25 @@
 {
   "products": [
     {
-      "id": "5f43",
-      "name": "Vegan Gluten Chocolate Donuts",
-      "description": "Vegan Gluten Chocolate Donuts",
-      "price": 2,
+      "id": "366a",
+      "name": "Classic Yellow Cake with Chocolate Frosting",
+      "description": "Classic Yellow Cake with Chocolate Frosting",
+      "price": 1000,
       "categoryIds": [
-        "1",
-        "746e"
+        "dfb8"
       ],
       "images": [
-        "http://localhost:4001/images/1755698847768-vegan-gluten-free-chocolate-donuts.jpg",
-        "http://localhost:4001/images/1755698847769-Chocolate-Doughnuts.png"
+        "http://localhost:4001/images/1756152046906-CALSSIC-YELLOW-CAKE-with-chocolate-frosting-09062017.png"
       ],
-      "updatedAt": "2025-08-20T14:07:27.773Z",
-      "createdAt": "2025-08-20T14:07:27.773Z"
-    },
-    {
-      "id": "7af8",
-      "name": "Vegan Birthday Cake",
-      "description": "Vegan Birthday Cake",
-      "price": 20,
-      "categoryIds": [
-        "1",
-        "3b51",
-        "1f46"
-      ],
-      "images": [
-        "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
-      ],
-      "updatedAt": "2025-08-20T14:12:42.750Z",
-      "createdAt": "2025-08-20T14:11:49.926Z"
+      "updatedAt": "2025-08-25T20:00:46.911Z",
+      "createdAt": "2025-08-25T20:00:46.911Z"
     }
   ],
   "categories": [
     {
-      "name": "Vegan",
-      "image": "http://localhost:4001/images/1755698252325-Vegan-birthday-cake-f53ef46.png",
-      "id": "1"
-    },
-    {
-      "id": "746e",
-      "name": "Chocolate Doughnuts",
-      "image": "http://localhost:4001/images/1755698726057-Chocolate-Doughnuts.png"
-    },
-    {
-      "id": "3b51",
-      "name": "Cake",
-      "image": "http://localhost:4001/images/1755699044801-Birthday-cake-9bef8a3.jpg"
-    },
-    {
-      "id": "1f46",
+      "id": "dfb8",
       "name": "Birthday Cake",
-      "image": "http://localhost:4001/images/1755699154658-CALSSIC-YELLOW-CAKE-with-chocolate-frosting-09062017.png"
+      "image": "http://localhost:4001/images/1756151967711-Vegan-birthday-cake-f53ef46.png"
     }
   ],
   "users": [
@@ -64,59 +31,11 @@
       "password": "ac7f4d1137e52d8ba221835e1e86209b07a9a72da76682be72fd0e001def8221",
       "role": "user",
       "createdAt": "2025-08-20T14:59:33.876Z"
-    },
-    {
-      "id": "d62d",
-      "firstName": "Sid",
-      "lastName": "Giri",
-      "email": "siddhartha@gmail.com",
-      "password": "ac7f4d1137e52d8ba221835e1e86209b07a9a72da76682be72fd0e001def8221",
-      "role": "user",
-      "createdAt": "2025-08-20T20:30:46.576Z"
     }
   ],
   "orders": [
     {
-      "id": "0709",
-      "customerInfo": {
-        "name": "Asal",
-        "phone": "9842822885",
-        "email": "paudel.asal00@gmail.com"
-      },
-      "shippingDetails": {
-        "address": "Imadol",
-        "mapLocation": {
-          "lat": 27.65607970672382,
-          "lng": 85.33925136108996
-        }
-      },
-      "items": [
-        {
-          "id": "5f43",
-          "name": "Vegan Gluten Chocolate Donuts",
-          "description": "Vegan Gluten Chocolate Donuts",
-          "price": 2,
-          "categoryIds": [
-            "1",
-            "746e"
-          ],
-          "images": [
-            "http://localhost:4001/images/1755698847768-vegan-gluten-free-chocolate-donuts.jpg",
-            "http://localhost:4001/images/1755698847769-Chocolate-Doughnuts.png"
-          ],
-          "updatedAt": "2025-08-20T14:07:27.773Z",
-          "createdAt": "2025-08-20T14:07:27.773Z",
-          "quantity": 5
-        }
-      ],
-      "totalAmount": 10,
-      "remarks": "",
-      "status": "Delivered",
-      "orderDate": "2025-08-21T16:37:50.096Z",
-      "lastUpdated": "2025-08-21T16:38:38.378Z"
-    },
-    {
-      "id": "b963",
+      "id": "19ca",
       "customerInfo": {
         "name": "Asal Paudel",
         "phone": "9842822885",
@@ -125,112 +44,69 @@
       "shippingDetails": {
         "address": "Halesi Tuwachung\nSalle, Majhgau",
         "mapLocation": {
-          "lat": 27.672908200533403,
-          "lng": 85.31850022666353
+          "lat": 27.656018303809404,
+          "lng": 85.33921220249708
         }
       },
       "items": [
         {
-          "id": "7af8",
-          "name": "Vegan Birthday Cake",
-          "description": "Vegan Birthday Cake",
-          "price": 20,
+          "id": "366a",
+          "name": "Classic Yellow Cake with Chocolate Frosting",
+          "description": "Classic Yellow Cake with Chocolate Frosting",
+          "price": 1000,
           "categoryIds": [
-            "1",
-            "3b51",
-            "1f46"
+            "dfb8"
           ],
           "images": [
-            "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
+            "http://localhost:4001/images/1756152046906-CALSSIC-YELLOW-CAKE-with-chocolate-frosting-09062017.png"
           ],
-          "updatedAt": "2025-08-20T14:12:42.750Z",
-          "createdAt": "2025-08-20T14:11:49.926Z",
+          "updatedAt": "2025-08-25T20:00:46.911Z",
+          "createdAt": "2025-08-25T20:00:46.911Z",
           "quantity": 1
         }
       ],
-      "totalAmount": 20,
-      "remarks": "hasefasf",
-      "status": "Pending",
-      "orderDate": "2025-08-22T01:52:50.090Z",
-      "lastUpdated": "2025-08-22T01:52:50.090Z"
-    },
-    {
-      "id": "1150",
-      "customerInfo": {
-        "name": "Admin",
-        "phone": "9842822885",
-        "email": "admin@admin.com"
-      },
-      "shippingDetails": {
-        "address": "Halesi Tuwachung\nSalle, Majhgau",
-        "mapLocation": {
-          "lat": 27.656092549042516,
-          "lng": 85.33923813837384
-        }
-      },
-      "items": [
-        {
-          "id": "7af8",
-          "name": "Vegan Birthday Cake",
-          "description": "Vegan Birthday Cake",
-          "price": 20,
-          "categoryIds": [
-            "1",
-            "3b51",
-            "1f46"
-          ],
-          "images": [
-            "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
-          ],
-          "updatedAt": "2025-08-20T14:12:42.750Z",
-          "createdAt": "2025-08-20T14:11:49.926Z",
-          "quantity": 2
-        }
-      ],
-      "totalAmount": 40,
+      "totalAmount": 1000,
       "remarks": "",
       "status": "Pending",
-      "orderDate": "2025-08-22T16:22:16.105Z",
-      "lastUpdated": "2025-08-22T16:22:16.105Z"
+      "orderDate": "2025-08-25T20:01:34.804Z",
+      "lastUpdated": "2025-08-25T20:01:34.804Z"
     },
     {
-      "id": "83fc",
+      "id": "92f2",
       "customerInfo": {
-        "name": "Asal",
+        "name": "Asal Paudel",
         "phone": "9842822885",
         "email": "paudel.asal00@gmail.com"
       },
       "shippingDetails": {
         "address": "Halesi Tuwachung\nSalle, Majhgau",
         "mapLocation": {
-          "lat": 27.67292007713385,
-          "lng": 85.31851567560477
+          "lat": 27.656071736303932,
+          "lng": 85.33923417680373
         }
       },
       "items": [
         {
-          "id": "7af8",
-          "name": "Vegan Birthday Cake",
-          "description": "Vegan Birthday Cake",
-          "price": 20,
+          "id": "366a",
+          "name": "Classic Yellow Cake with Chocolate Frosting",
+          "description": "Classic Yellow Cake with Chocolate Frosting",
+          "price": 1000,
           "categoryIds": [
-            "1",
-            "3b51",
-            "1f46"
+            "dfb8"
           ],
           "images": [
-            "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
+            "http://localhost:4001/images/1756152046906-CALSSIC-YELLOW-CAKE-with-chocolate-frosting-09062017.png"
           ],
-          "updatedAt": "2025-08-20T14:12:42.750Z",
-          "createdAt": "2025-08-20T14:11:49.926Z",
-          "quantity": 100
+          "updatedAt": "2025-08-25T20:00:46.911Z",
+          "createdAt": "2025-08-25T20:00:46.911Z",
+          "quantity": 1
         }
       ],
-      "totalAmount": 2000,
+      "totalAmount": 1000,
       "remarks": "",
-      "status": "Cancelled",
-      "orderDate": "2025-08-25T03:41:01.458Z",
-      "lastUpdated": "2025-08-25T03:41:38.426Z"
+      "status": "Pending",
+      "orderDate": "2025-08-25T20:03:10.279Z",
+      "lastUpdated": "2025-08-25T20:03:10.279Z"
     }
   ]
 }

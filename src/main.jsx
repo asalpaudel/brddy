@@ -3,11 +3,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { CartProvider } from './context/CartContext.jsx';
-import 'leaflet/dist/leaflet.css'; //for leaflet map
+import 'leaflet/dist/leaflet.css'; 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* 2. Wrap your App component */}
+   
     <CartProvider>
       <App />
     </CartProvider>

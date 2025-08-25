@@ -12,7 +12,6 @@ const Header = () => {
     const [userName, setUserName] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // 1. Get updateUserSession along with cartItems
     const { cartItems, updateUserSession } = useCart();
     const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
@@ -42,12 +41,12 @@ const Header = () => {
         localStorage.removeItem('USER_EMAIL');
         localStorage.removeItem('USER_ROLE');
         localStorage.removeItem('USER_FNAME');
+        localStorage.removeItem('USER_LNAME'); // Added last name removal
         
         setIsLoggedIn(false);
         setUserName(null);
         setIsProfileOpen(false);
         
-        // 2. Call this on logout to clear the session cart
         updateUserSession(); 
         
         navigate('/login');
@@ -57,10 +56,11 @@ const Header = () => {
         { href: '/', label: 'Home' },
         { href: '/products', label: 'Products' },
         { href: '/about', label: 'About Us' },
+        { href: '/contact', label: 'Contact Us' }
     ];
 
     return (
-        <nav className="bg-orange-50/80 backdrop-blur-md sticky top-0 z-50">
+        <nav className="bg-orange-50/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
                     

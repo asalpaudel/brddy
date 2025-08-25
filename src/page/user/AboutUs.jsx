@@ -3,6 +3,7 @@
 import React from 'react';
 import { FaFeatherAlt, FaHeart, FaSeedling } from 'react-icons/fa';
 import bannerImage from '../../assets/banner.png'; // cite: src/page/user/AboutUs.jsx
+import ImageGallery from '../../component/user/ImageGallery';
 
 const AboutUs = () => {
     return (
@@ -81,8 +82,10 @@ const AboutUs = () => {
                     </div>
                 </div>
             </div>
+            <ImageGallery />
 
         </div>
+        
     );
 };
 
