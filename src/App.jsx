@@ -16,7 +16,7 @@ import Cart from './page/user/Cart';
 import OrdersAdmin from './page/admin/Orders';
 import Checkout from './page/user/Checkout';
 import MyOrders from './page/user/MyOrders';
-import AboutUs from './page/user/Aboutus';
+import AboutUs from './page/user/AboutUs';
 import ContactUs from './page/user/ContactUs';
 
 
