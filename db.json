@@ -77,56 +77,17 @@
   ],
   "orders": [
     {
-      "id": "a36a",
+      "id": "0709",
       "customerInfo": {
-        "name": "Asal Paudel",
+        "name": "Asal",
         "phone": "9842822885",
         "email": "paudel.asal00@gmail.com"
       },
       "shippingDetails": {
         "address": "Imadol",
         "mapLocation": {
-          "lat": 27.65603209671474,
-          "lng": 85.33920668468858
-        }
-      },
-      "items": [
-        {
-          "id": "7af8",
-          "name": "Vegan Birthday Cake",
-          "description": "Vegan Birthday Cake",
-          "price": 20,
-          "categoryIds": [
-            "1",
-            "3b51",
-            "1f46"
-          ],
-          "images": [
-            "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
-          ],
-          "updatedAt": "2025-08-20T14:12:42.750Z",
-          "createdAt": "2025-08-20T14:11:49.926Z",
-          "quantity": 1
-        }
-      ],
-      "totalAmount": 20,
-      "remarks": "",
-      "status": "Cancelled",
-      "orderDate": "2025-08-20T19:57:27.802Z",
-      "lastUpdated": "2025-08-20T20:06:02.581Z"
-    },
-    {
-      "id": "a0f0",
-      "customerInfo": {
-        "name": "Asal Paudel",
-        "phone": "9842822885",
-        "email": "paudel.asal00@gmail.com"
-      },
-      "shippingDetails": {
-        "address": "Imadol, Sheetal Tole",
-        "mapLocation": {
-          "lat": 27.65606572456882,
-          "lng": 85.33923150436087
+          "lat": 27.65607970672382,
+          "lng": 85.33925136108996
         }
       },
       "items": [
@@ -145,27 +106,27 @@
           ],
           "updatedAt": "2025-08-20T14:07:27.773Z",
           "createdAt": "2025-08-20T14:07:27.773Z",
-          "quantity": 9
+          "quantity": 5
         }
       ],
-      "totalAmount": 18,
+      "totalAmount": 10,
       "remarks": "",
-      "status": "Cancelled",
-      "orderDate": "2025-08-20T20:05:20.477Z",
-      "lastUpdated": "2025-08-20T20:06:14.960Z"
+      "status": "Delivered",
+      "orderDate": "2025-08-21T16:37:50.096Z",
+      "lastUpdated": "2025-08-21T16:38:38.378Z"
     },
     {
-      "id": "0e83",
+      "id": "b963",
       "customerInfo": {
         "name": "Asal Paudel",
         "phone": "9842822885",
-        "email": "guest@example.com"
+        "email": "paudel.asal00@gmail.com"
       },
       "shippingDetails": {
         "address": "Halesi Tuwachung\nSalle, Majhgau",
         "mapLocation": {
-          "lat": 27.65604182542114,
-          "lng": 85.33923509065309
+          "lat": 27.672908200533403,
+          "lng": 85.31850022666353
         }
       },
       "items": [
@@ -188,10 +149,88 @@
         }
       ],
       "totalAmount": 20,
-      "remarks": "Happy birthday geda bahadur",
+      "remarks": "hasefasf",
       "status": "Pending",
-      "orderDate": "2025-08-20T20:16:40.843Z",
-      "lastUpdated": "2025-08-20T20:16:40.843Z"
+      "orderDate": "2025-08-22T01:52:50.090Z",
+      "lastUpdated": "2025-08-22T01:52:50.090Z"
+    },
+    {
+      "id": "1150",
+      "customerInfo": {
+        "name": "Admin",
+        "phone": "9842822885",
+        "email": "admin@admin.com"
+      },
+      "shippingDetails": {
+        "address": "Halesi Tuwachung\nSalle, Majhgau",
+        "mapLocation": {
+          "lat": 27.656092549042516,
+          "lng": 85.33923813837384
+        }
+      },
+      "items": [
+        {
+          "id": "7af8",
+          "name": "Vegan Birthday Cake",
+          "description": "Vegan Birthday Cake",
+          "price": 20,
+          "categoryIds": [
+            "1",
+            "3b51",
+            "1f46"
+          ],
+          "images": [
+            "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
+          ],
+          "updatedAt": "2025-08-20T14:12:42.750Z",
+          "createdAt": "2025-08-20T14:11:49.926Z",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 40,
+      "remarks": "",
+      "status": "Pending",
+      "orderDate": "2025-08-22T16:22:16.105Z",
+      "lastUpdated": "2025-08-22T16:22:16.105Z"
+    },
+    {
+      "id": "83fc",
+      "customerInfo": {
+        "name": "Asal",
+        "phone": "9842822885",
+        "email": "paudel.asal00@gmail.com"
+      },
+      "shippingDetails": {
+        "address": "Halesi Tuwachung\nSalle, Majhgau",
+        "mapLocation": {
+          "lat": 27.67292007713385,
+          "lng": 85.31851567560477
+        }
+      },
+      "items": [
+        {
+          "id": "7af8",
+          "name": "Vegan Birthday Cake",
+          "description": "Vegan Birthday Cake",
+          "price": 20,
+          "categoryIds": [
+            "1",
+            "3b51",
+            "1f46"
+          ],
+          "images": [
+            "http://localhost:4001/images/1755699109923-Vegan-birthday-cake-f53ef46.png"
+          ],
+          "updatedAt": "2025-08-20T14:12:42.750Z",
+          "createdAt": "2025-08-20T14:11:49.926Z",
+          "quantity": 100
+        }
+      ],
+      "totalAmount": 2000,
+      "remarks": "",
+      "status": "Cancelled",
+      "orderDate": "2025-08-25T03:41:01.458Z",
+      "lastUpdated": "2025-08-25T03:41:38.426Z"
     }
   ]
 }

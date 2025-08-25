@@ -1,25 +1,40 @@
+// src/page/admin/Orders.jsx
+
 import React, { useState, useEffect } from 'react';
 import { getAllOrders } from '../../services/order';
 import { toast } from 'react-toastify';
-import { HiEye } from 'react-icons/hi';
-import ViewOrder from '../../component/admin/ViewOrder'; // We will create this next
+import { HiEye, HiOutlineSortAscending, HiOutlineSortDescending } from 'react-icons/hi';
+import ViewOrder from '../../component/admin/ViewOrder';
 
 const OrdersAdmin = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [orderToView, setOrderToView] = useState(null);
+    const [statusFilter, setStatusFilter] = useState('');
+    const [sortOrder, setSortOrder] = useState('desc'); // 'desc' for recent to oldest, 'asc' for oldest to recent
 
     const fetchOrders = () => {
         setLoading(true);
-        getAllOrders()
-            .then(setOrders)
+        getAllOrders(statusFilter)
+            .then(data => {
+                // Apply sorting based on the sortOrder state
+                const sortedData = data.sort((a, b) => {
+                    if (sortOrder === 'desc') {
+                        return new Date(b.orderDate) - new Date(a.orderDate);
+                    } else {
+                        return new Date(a.orderDate) - new Date(b.orderDate);
+                    }
+                });
+                setOrders(sortedData);
+            })
             .catch(() => toast.error("Failed to fetch orders."))
             .finally(() => setLoading(false));
     };
 
+    // Re-fetch and sort orders when the filter or sort order changes
     useEffect(() => {
         fetchOrders();
-    }, []);
+    }, [statusFilter, sortOrder]);
 
     const handleViewOrder = (order) => {
         setOrderToView(order);
@@ -27,7 +42,12 @@ const OrdersAdmin = () => {
 
     const handleCloseView = () => {
         setOrderToView(null);
-        fetchOrders(); // Re-fetch orders in case status was updated
+        fetchOrders(); 
+    };
+    
+    // Toggles the sort order between ascending and descending
+    const toggleSortOrder = () => {
+        setSortOrder(prevOrder => prevOrder === 'desc' ? 'asc' : 'desc');
     };
 
     const getStatusColor = (status) => {
@@ -40,6 +60,8 @@ const OrdersAdmin = () => {
             default: return 'bg-gray-100 text-gray-800';
         }
     };
+    
+    const orderStatuses = ['All', 'Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 
     if (orderToView) {
         return <ViewOrder order={orderToView} onClose={handleCloseView} />;
@@ -47,7 +69,33 @@ const OrdersAdmin = () => {
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-3xl font-bold text-stone-700 mb-6">Manage Orders</h2>
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
+                <h2 className="text-3xl font-bold text-stone-700">Manage Orders</h2>
+                <div className="flex items-center gap-4">
+                    {/* Sort Button */}
+                    <button
+                        onClick={toggleSortOrder}
+                        className="flex items-center gap-2 text-sm font-medium text-stone-700 p-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                        title={sortOrder === 'desc' ? 'Sort oldest to newest' : 'Sort newest to oldest'}
+                    >
+                        {sortOrder === 'desc' ? <HiOutlineSortDescending className="h-5 w-5" /> : <HiOutlineSortAscending className="h-5 w-5" />}
+                        <span>{sortOrder === 'desc' ? 'Newest' : 'Oldest'}</span>
+                    </button>
+                    
+                    {/* Status Filter */}
+                    <select
+                        id="statusFilter"
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value === 'All' ? '' : e.target.value)}
+                        className="block w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                    >
+                        <option value="All">All Statuses</option>
+                        {orderStatuses.slice(1).map(status => (
+                            <option key={status} value={status}>{status}</option>
+                        ))}
+                    </select>
+                </div>
+            </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white">
                     <thead className="bg-amber-100">

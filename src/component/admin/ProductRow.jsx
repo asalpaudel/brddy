@@ -25,7 +25,7 @@ const ProductRow = ({ productData, categories, handleEdit, handleDelete, handleV
                     </td>
                     <td className="py-3 px-4 font-medium text-stone-800">{item.name}</td>
                     <td className="py-3 px-4">{getCategoryNames(item.categoryIds)}</td>
-                    <td className="py-3 px-4">${item.price}</td>
+                    <td className="py-3 px-4">Rs. {item.price}</td>
                     <td className="py-3 px-4">{new Date(item.updatedAt).toLocaleDateString()}</td>
                     <td className="py-3 px-4">
                         <div className="flex items-center space-x-3">

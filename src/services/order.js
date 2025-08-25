@@ -1,3 +1,5 @@
+// src/services/order.js
+
 import axios from 'axios';
 
 const API_URL = 'http://localhost:4000/orders';
@@ -13,11 +15,16 @@ export const placeOrder = async (orderData) => {
     }
 };
 
-// for admi to get all orders
-export const getAllOrders = async () => {
+// for admi to get all orders, now with filtering
+export const getAllOrders = async (status = '') => {
     try {
-        // Sort by order date
-        const response = await axios.get(`${API_URL}?_sort=orderDate&_order=desc`);
+        // Base URL sorts by date in descending order (recent to old)
+        let url = `${API_URL}?_sort=orderDate&_order=desc`;
+        // If a status is provided, append it as a query parameter
+        if (status) {
+            url += `&status=${status}`;
+        }
+        const response = await axios.get(url);
         return response.data;
     } catch (error) {
         console.error("Error fetching all orders:", error);

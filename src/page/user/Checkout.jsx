@@ -8,7 +8,6 @@ import L from 'leaflet';
 import { HiLocationMarker, HiSearch } from 'react-icons/hi';
 import axios from 'axios';
 
-// Fix for default marker icon issue which can sometimes occur with bundlers like Webpack
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
@@ -16,20 +15,20 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
 
-// A helper component to handle map events like clicking
+
 const MapEvents = ({ setPosition }) => {
   const map = useMap();
   useMapEvents({
     click(e) {
-      setPosition(e.latlng); // Set the parent's position state
-      map.flyTo(e.latlng, map.getZoom()); // Pan the map to the clicked location
+      setPosition(e.latlng); 
+      map.flyTo(e.latlng, map.getZoom()); 
     },
   });
   return null;
 };
 
 const Checkout = () => {
-  // --- UPDATED: Destructure clearCart from the hook ---
+  
   const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
   
