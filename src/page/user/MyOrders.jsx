@@ -80,13 +80,13 @@ const MyOrders = () => {
                                             <img src={item.images[0]} alt={item.name} className="w-12 h-12 object-cover rounded mr-4" />
                                             <span>{item.name} x {item.quantity}</span>
                                         </div>
-                                        <span>${(item.price * item.quantity).toFixed(2)}</span>
+                                        <span>Rs. {(item.price * item.quantity).toFixed(2)}</span>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                          <div className="text-right mt-4 font-bold text-lg">
-                            Total: ${order.totalAmount.toFixed(2)}
+                            Total: Rs. {order.totalAmount.toFixed(2)}
                         </div>
                     </div>
                 ))}

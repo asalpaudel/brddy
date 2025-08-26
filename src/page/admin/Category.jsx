@@ -55,7 +55,7 @@ const Category = () => {
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-lg">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
                 <h2 className="text-3xl font-bold text-stone-700">Product Categories</h2>
                 <button onClick={handleAdd} className="bg-amber-500 text-white px-5 py-2 rounded-md hover:bg-amber-600 transition-colors">
                     + Add Category

@@ -13,6 +13,34 @@
       ],
       "updatedAt": "2025-08-25T20:00:46.911Z",
       "createdAt": "2025-08-25T20:00:46.911Z"
+    },
+    {
+      "id": "e54e",
+      "name": "Tall Macarons Chocolate Cake",
+      "description": "Tall Macarons Chocolate Cake.jpg",
+      "price": 2000,
+      "categoryIds": [
+        "dfb8"
+      ],
+      "images": [
+        "http://localhost:4001/images/1756242405563-Tall Macarons Chocolate Cake.jpg"
+      ],
+      "updatedAt": "2025-08-26T21:06:45.568Z",
+      "createdAt": "2025-08-26T21:06:45.568Z"
+    },
+    {
+      "id": "7967",
+      "name": "Parcel Designer Cake ( 3 Pound)",
+      "description": "Parcel Designer Cake ( 3 Pound)",
+      "price": 1200,
+      "categoryIds": [
+        "dfb8"
+      ],
+      "images": [
+        "http://localhost:4001/images/1756242435698-Parcel Designer Cake ( 3 Pound).jpeg"
+      ],
+      "updatedAt": "2025-08-26T21:07:15.703Z",
+      "createdAt": "2025-08-26T21:07:15.703Z"
     }
   ],
   "categories": [
@@ -20,12 +48,37 @@
       "id": "dfb8",
       "name": "Birthday Cake",
       "image": "http://localhost:4001/images/1756151967711-Vegan-birthday-cake-f53ef46.png"
+    },
+    {
+      "id": "d0a9",
+      "name": "Bagel",
+      "image": "http://localhost:4001/images/1756241938295-bagel.jpg"
+    },
+    {
+      "id": "5e66",
+      "name": "Baguette",
+      "image": "http://localhost:4001/images/1756241959888-baguette.jpg"
+    },
+    {
+      "id": "a534",
+      "name": "Croissant",
+      "image": "http://localhost:4001/images/1756242097677-croissant.jpg"
+    },
+    {
+      "id": "09ca",
+      "name": "Pastry",
+      "image": "http://localhost:4001/images/1756242148341-Pastry.jpg"
+    },
+    {
+      "id": "86fe",
+      "name": "Tart",
+      "image": "http://localhost:4001/images/1756242195218-Tart.jpeg"
     }
   ],
   "users": [
     {
       "id": "f7a3",
-      "firstName": "Asal",
+      "firstName": "Asa",
       "lastName": "Paudel",
       "email": "paudel.asal00@gmail.com",
       "password": "ac7f4d1137e52d8ba221835e1e86209b07a9a72da76682be72fd0e001def8221",
@@ -67,9 +120,9 @@
       ],
       "totalAmount": 1000,
       "remarks": "",
-      "status": "Pending",
+      "status": "Processing",
       "orderDate": "2025-08-25T20:01:34.804Z",
-      "lastUpdated": "2025-08-25T20:01:34.804Z"
+      "lastUpdated": "2025-08-26T20:45:42.729Z"
     },
     {
       "id": "92f2",
@@ -104,9 +157,83 @@
       ],
       "totalAmount": 1000,
       "remarks": "",
-      "status": "Pending",
+      "status": "Delivered",
       "orderDate": "2025-08-25T20:03:10.279Z",
-      "lastUpdated": "2025-08-25T20:03:10.279Z"
+      "lastUpdated": "2025-08-26T20:46:30.010Z"
+    },
+    {
+      "id": "9428",
+      "customerInfo": {
+        "name": "Asa Paudel",
+        "phone": "9842822885",
+        "email": "paudel.asal00@gmail.com"
+      },
+      "shippingDetails": {
+        "address": "Halesi Tuwachung",
+        "mapLocation": {
+          "lat": 27.656043741503158,
+          "lng": 85.3392235055178
+        }
+      },
+      "items": [
+        {
+          "id": "366a",
+          "name": "Classic Yellow Cake with Chocolate Frosting",
+          "description": "Classic Yellow Cake with Chocolate Frosting",
+          "price": 1000,
+          "categoryIds": [
+            "dfb8"
+          ],
+          "images": [
+            "http://localhost:4001/images/1756152046906-CALSSIC-YELLOW-CAKE-with-chocolate-frosting-09062017.png"
+          ],
+          "updatedAt": "2025-08-25T20:00:46.911Z",
+          "createdAt": "2025-08-25T20:00:46.911Z",
+          "quantity": 5
+        }
+      ],
+      "totalAmount": 5000,
+      "remarks": "",
+      "status": "Delivered",
+      "orderDate": "2025-08-26T20:31:19.284Z",
+      "lastUpdated": "2025-08-26T20:46:35.026Z"
+    },
+    {
+      "id": "65bc",
+      "customerInfo": {
+        "name": "Asa Paudel",
+        "phone": "9842822885",
+        "email": "paudel.asal00@gmail.com"
+      },
+      "shippingDetails": {
+        "address": "Halesi Tuwachung",
+        "mapLocation": {
+          "lat": 27.656043741503158,
+          "lng": 85.3392235055178
+        }
+      },
+      "items": [
+        {
+          "id": "366a",
+          "name": "Classic Yellow Cake with Chocolate Frosting",
+          "description": "Classic Yellow Cake with Chocolate Frosting",
+          "price": 1000,
+          "categoryIds": [
+            "dfb8"
+          ],
+          "images": [
+            "http://localhost:4001/images/1756152046906-CALSSIC-YELLOW-CAKE-with-chocolate-frosting-09062017.png"
+          ],
+          "updatedAt": "2025-08-25T20:00:46.911Z",
+          "createdAt": "2025-08-25T20:00:46.911Z",
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 2000,
+      "remarks": "",
+      "status": "Delivered",
+      "orderDate": "2025-08-26T20:33:23.432Z",
+      "lastUpdated": "2025-08-26T20:47:59.953Z"
     }
   ]
 }

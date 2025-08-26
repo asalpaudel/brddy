@@ -51,10 +51,35 @@ const Register = () => {
     // --- Core Validation Logic ---
     const validateForm = () => {
         const newErrors = {};
+
         if (!firstName.trim()) newErrors.firstName = "First name is required.";
         if (!lastName.trim()) newErrors.lastName = "Last name is required.";
-        if (!email.trim()) newErrors.email = "Email is required.";
-        // The password strength itself is handled by disabling the button
+
+        // Detailed Email Validation
+        if (!email.trim()) {
+            newErrors.email = "Email is required.";
+        } else if (!email.includes("@")) {
+            newErrors.email = "Email must contain '@' (e.g., user@example.com).";
+        } else {
+            const [localPart, domainPart] = email.split("@");
+
+            if (!localPart) {
+                newErrors.email = "Email must have a username before '@' (e.g., user@example.com).";
+            } else if (!domainPart) {
+                newErrors.email = "Email must have a domain after '@' (e.g., gmail.com).";
+            } else if (!domainPart.includes(".")) {
+                newErrors.email = "Email domain must contain a '.' (e.g., gmail.com).";
+            } else {
+                const [domainName, extension] = domainPart.split(".");
+                if (!domainName) {
+                    newErrors.email = "Email must include a domain name after '@' (e.g., gmail.com).";
+                } else if (!extension) {
+                    newErrors.email = "Email domain must end with a valid extension (e.g., .com, .org).";
+                }
+            }
+        }
+
+        // Confirm password validation
         if (password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match.";
         
         setErrors(newErrors);

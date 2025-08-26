@@ -81,12 +81,12 @@ const ViewOrder = ({ order, onClose }) => {
                                             <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
                                         </div>
                                     </div>
-                                    <p className="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                                    <p className="font-semibold">Rs. {(item.price * item.quantity).toFixed(2)}</p>
                                 </li>
                             ))}
                              <li className="flex justify-between p-4 bg-gray-50 font-bold text-lg">
                                 <span>Total</span>
-                                <span>${order.totalAmount.toFixed(2)}</span>
+                                <span>Rs. {order.totalAmount.toFixed(2)}</span>
                             </li>
                         </ul>
                     </div>

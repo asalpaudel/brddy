@@ -1,5 +1,3 @@
-// src/page/admin/Orders.jsx
-
 import React, { useState, useEffect } from 'react';
 import { getAllOrders } from '../../services/order';
 import { toast } from 'react-toastify';
@@ -11,13 +9,13 @@ const OrdersAdmin = () => {
     const [loading, setLoading] = useState(true);
     const [orderToView, setOrderToView] = useState(null);
     const [statusFilter, setStatusFilter] = useState('');
-    const [sortOrder, setSortOrder] = useState('desc'); // 'desc' for recent to oldest, 'asc' for oldest to recent
+    const [sortOrder, setSortOrder] = useState('desc'); 
 
     const fetchOrders = () => {
         setLoading(true);
         getAllOrders(statusFilter)
             .then(data => {
-                // Apply sorting based on the sortOrder state
+                //  sorting 
                 const sortedData = data.sort((a, b) => {
                     if (sortOrder === 'desc') {
                         return new Date(b.orderDate) - new Date(a.orderDate);
@@ -31,7 +29,7 @@ const OrdersAdmin = () => {
             .finally(() => setLoading(false));
     };
 
-    // Re-fetch and sort orders when the filter or sort order changes
+    //fiters
     useEffect(() => {
         fetchOrders();
     }, [statusFilter, sortOrder]);
@@ -45,7 +43,7 @@ const OrdersAdmin = () => {
         fetchOrders(); 
     };
     
-    // Toggles the sort order between ascending and descending
+    
     const toggleSortOrder = () => {
         setSortOrder(prevOrder => prevOrder === 'desc' ? 'asc' : 'desc');
     };
@@ -96,7 +94,9 @@ const OrdersAdmin = () => {
                     </select>
                 </div>
             </div>
-            <div className="overflow-x-auto">
+
+       
+            <div className="hidden md:block overflow-x-auto">
                 <table className="min-w-full bg-white">
                     <thead className="bg-amber-100">
                         <tr>
@@ -117,7 +117,7 @@ const OrdersAdmin = () => {
                                     <td className="py-3 px-4 font-mono text-sm">#{order.id}</td>
                                     <td className="py-3 px-4">{order.customerInfo.name}</td>
                                     <td className="py-3 px-4">{new Date(order.orderDate).toLocaleDateString()}</td>
-                                    <td className="py-3 px-4 font-semibold">${order.totalAmount.toFixed(2)}</td>
+                                    <td className="py-3 px-4 font-semibold">Rs. {order.totalAmount.toFixed(2)}</td>
                                     <td className="py-3 px-4 text-center">
                                         <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getStatusColor(order.status)}`}>
                                             {order.status}
@@ -136,6 +136,37 @@ const OrdersAdmin = () => {
                     </tbody>
                 </table>
             </div>
+
+           
+            <div className="md:hidden space-y-4">
+                {loading ? (
+                    <p className="text-center py-8">Loading orders...</p>
+                ) : orders.length > 0 ? (
+                    orders.map(order => (
+                        <div key={order.id} className="bg-white p-4 rounded-lg shadow border border-gray-100">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="font-bold text-lg text-stone-800">#{order.id}</h3>
+                                    <p className="text-sm text-stone-600">{order.customerInfo.name}</p>
+                                    <p className="text-xs text-gray-500 mt-1">{new Date(order.orderDate).toLocaleDateString()}</p>
+                                </div>
+                                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getStatusColor(order.status)}`}>
+                                    {order.status}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                                <p className="text-md font-semibold text-amber-600">Rs. {order.totalAmount.toFixed(2)}</p>
+                                <button onClick={() => handleViewOrder(order)} className="text-gray-500 hover:text-gray-700 p-2">
+                                    <HiEye className="h-5 w-5" />
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-center py-8">No orders found.</p>
+                )}
+            </div>
+
         </div>
     );
 };

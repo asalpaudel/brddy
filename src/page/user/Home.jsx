@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // 1. Import the Link component
+import { Link } from 'react-router-dom';
 import HeroBanner from '../../component/user/HeroBanner';
 import ProductList from '../../component/user/ProductList';
 import ImageGallery from '../../component/user/ImageGallery';
@@ -13,10 +13,9 @@ const Home = () => {
         const fetchProducts = async () => {
             try {
                 const productData = await getAllProducts();
-                // show only 8 products
+                // Fetch all products, but only store the first 8 in state.
                 setProducts(productData.slice(0, 8)); 
-            } catch (error)
-{
+            } catch (error) {
                 toast.error("Failed to load featured products.");
             }
         };
@@ -26,26 +25,27 @@ const Home = () => {
     return (
         <>
             <HeroBanner />
+            
             {/* Featured Products Section */}
-            <div className="my-12 relative">
-                {/* Heading */}
-                <h2 className="text-3xl font-bold text-center text-stone-800 mb-8">
-                    Featured Products
-                </h2>
+            <div className="my-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* CORRECTED: Heading using Flexbox for proper alignment */}
+                <div className="flex justify-between items-center mb-8">
+                    <h2 className="text-3xl font-bold text-stone-800">
+                        Featured Products
+                    </h2>
+                    <Link 
+                        to="/products" 
+                        className="text-amber-500 hover:text-amber-600 font-medium transition-colors duration-300"
+                    >
+                        View All Products
+                    </Link>
+                </div>
 
-                {/* View All Products link - positioned top right */}
-                <Link 
-                    to="/products" 
-                    className="absolute right-0 top-2 text-amber-500 hover:text-amber-600 font-medium transition-colors duration-300"
-                >
-                    View All Products
-                </Link>
-
-                {/* Limit products to 9 */}
-                <ProductList products={products.slice(0, 9)} />
+                {/* CORRECTED: Pass the already sliced products array directly */}
+                <ProductList products={products} />
             </div>
 
-            {/* 2. New "About Us" Section */}
+            {/* "About Us" Section */}
             <div className="bg-orange-50/80 py-16 px-4 text-center">
                 <h2 className="text-3xl font-bold text-amber-900 mb-4">From Our Kitchen to Yours</h2>
                 <p className="text-lg text-slate-700 max-w-3xl mx-auto mb-8">
@@ -58,8 +58,8 @@ const Home = () => {
                     Learn More About Us
                 </Link>
             </div>
+            
             <ImageGallery />
-
         </>
     );
 };

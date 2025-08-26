@@ -14,15 +14,18 @@ export const doLogin = async (email, password) => {
     try {
         const hashedPassword = await sha256(password);
 
+        // Handle admin login
         if (email === ADMIN_CREDENTIALS.email && hashedPassword === ADMIN_CREDENTIALS.password) {
             localStorage.setItem('AUTH_TOKEN', AUTH_TOKEN);
             localStorage.setItem('USER_EMAIL', ADMIN_CREDENTIALS.email);
             localStorage.setItem('USER_ROLE', ADMIN_CREDENTIALS.role);
             localStorage.setItem('USER_FNAME', 'Admin');
-            localStorage.setItem('USER_LNAME', 'User'); // Added admin last name
+            localStorage.setItem('USER_LNAME', 'User');
+            localStorage.setItem('USER_ID', 'admin_user'); // Admin has a placeholder ID
             return { loggedIn: true, role: 'admin' };
         }
 
+        // Handle regular user login
         const response = await axios.get(`${API_URL}?email=${email}&password=${hashedPassword}`);
         if (response.data.length > 0) {
             const user = response.data[0];
@@ -30,7 +33,8 @@ export const doLogin = async (email, password) => {
             localStorage.setItem('USER_EMAIL', user.email);
             localStorage.setItem('USER_ROLE', user.role || 'user');
             localStorage.setItem('USER_FNAME', user.firstName);
-            localStorage.setItem('USER_LNAME', user.lastName); // Added user last name
+            localStorage.setItem('USER_LNAME', user.lastName);
+            localStorage.setItem('USER_ID', user.id); // <- Key Change: Store the user's ID
             return { loggedIn: true, role: user.role || 'user' };
         } else {
             return { loggedIn: false, role: null };
@@ -43,6 +47,7 @@ export const doLogin = async (email, password) => {
 
 export const doRegister = async (firstName, lastName, email, password) => {
     try {
+        // Check if user already exists
         const checkResponse = await axios.get(`${API_URL}?email=${email}`);
         if (checkResponse.data.length > 0) {
             throw new Error("An account with this email already exists.");
@@ -64,6 +69,6 @@ export const doRegister = async (firstName, lastName, email, password) => {
 
     } catch (error) {
         console.error("Registration service error:", error.message);
-        throw error; 
+        throw error;
     }
 };

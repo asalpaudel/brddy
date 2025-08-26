@@ -34,7 +34,7 @@ const Cart = () => {
                         />
                             <div>
                                 <h3 className="font-semibold text-stone-700">{item.name}</h3>
-                                <p className="text-sm text-stone-500">${parseFloat(item.price).toFixed(2)}</p>
+                                <p className="text-sm text-stone-500">Rs. {parseFloat(item.price).toFixed(2)}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
