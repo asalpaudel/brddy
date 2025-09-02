@@ -5,7 +5,9 @@ Brrdy is a full-featured e-commerce web application for a bakery. It provides a 
 ### Feel free to fork this repository, modify it, and use it for your own project.
 
 -----
-
+## Demo: https://brddy.vercel.app/ 
+## Scroll below for setup instructions
+----
 ## Features
 
 ### User Features
@@ -40,6 +42,18 @@ Brrdy is a full-featured e-commerce web application for a bakery. It provides a 
   * **Backend (Mock):** `json-server` for the data API and a simple Express server for image uploads.
 
 -----
+## Screenshots
+<img width="1862" height="1009" alt="image" src="https://github.com/user-attachments/assets/d0085367-c0bf-49c8-a1cd-a0ef150b3eec" />
+<img width="1868" height="1015" alt="image" src="https://github.com/user-attachments/assets/1931f489-a382-44e3-b7c9-101f349a5133" />
+<img width="1863" height="1013" alt="image" src="https://github.com/user-attachments/assets/ea007c05-450c-4700-b572-a1008c901120" />
+<img width="1879" height="1010" alt="image" src="https://github.com/user-attachments/assets/dda6069e-63e6-41f0-96c5-9b09f0d8dc29" />
+<img width="1876" height="1011" alt="image" src="https://github.com/user-attachments/assets/b042624c-8a93-4a3d-b2e5-4a4c46345ce7" />
+<img width="1863" height="1013" alt="image" src="https://github.com/user-attachments/assets/7b7519d1-2489-4807-ab77-38b697f21060" />
+<img width="1871" height="1010" alt="image" src="https://github.com/user-attachments/assets/6cfa4874-e453-4783-9cff-3ad7314e5d5f" />
+<img width="1859" height="1013" alt="image" src="https://github.com/user-attachments/assets/4748c334-40cf-40f5-927a-7ea952a7d278" />
+<img width="1877" height="1009" alt="image" src="https://github.com/user-attachments/assets/c0a4496e-cdf2-4344-86ed-d2264e58829a" />
+<img width="1880" height="1016" alt="image" src="https://github.com/user-attachments/assets/7b0eb059-e246-4466-9070-20af782a0ad7" />
+
 
 ## Installation and Setup
 
